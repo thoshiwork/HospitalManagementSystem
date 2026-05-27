@@ -20,11 +20,11 @@ public class AddPatient extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AddPatient.class.getName());
 
-    Connect con = new Connect();
+
     public AddPatient() {
         initComponents();
         this.setLocationRelativeTo(null);
-        con.Connect();
+  
         
     }
     PreparedStatement pst;
@@ -164,7 +164,7 @@ public class AddPatient extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        clear();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnAddPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPatientActionPerformed

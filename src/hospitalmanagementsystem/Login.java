@@ -52,7 +52,7 @@ public class Login extends javax.swing.JFrame {
         setResizable(false);
 
         jPanel1.setPreferredSize(new java.awt.Dimension(300, 500));
-        jPanel1.setLayout(new java.awt.GridLayout());
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\USER\\Documents\\NetBeansProjects\\HospitalManagementSystem\\Suchen Sie Pflegekräfte I kebay_eu.jpg")); // NOI18N
         jPanel1.add(jLabel2);

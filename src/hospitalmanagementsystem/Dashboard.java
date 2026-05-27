@@ -7,6 +7,10 @@ package hospitalmanagementsystem;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.CardLayout;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.*;
+import java.sql.Statement;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -21,14 +25,14 @@ public class Dashboard extends javax.swing.JFrame {
     /**
      * Creates new form Dashboard
      */
-    CardLayout cardLayout;
-
+    Connect con = new Connect();
     public Dashboard() {
         initComponents();
 
 //        Maximizing the JFrame in the open
         this.setLocationRelativeTo(null);
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        PatientTableLoad();
 
     }
 
@@ -339,17 +343,17 @@ public class Dashboard extends javax.swing.JFrame {
 
         PatientTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "P_Id", "Name", "DOB", "Contact", "Email"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -566,5 +570,16 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel userlbl;
     private javax.swing.JLabel welcomemsg;
     // End of variables declaration//GEN-END:variables
-
+    
+// Loading All the Tables
+    private void PatientTableLoad() {
+        try {
+            Statement pst = con.getConnection().createStatement();
+            ResultSet rs = pst.executeQuery("SELECT * FROM patients");
+        } catch (SQLException ex) {
+            System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+              
+    }
+    
 }
