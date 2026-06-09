@@ -8,11 +8,12 @@ import java.sql.*;
 import java.sql.Connection;
 /**
  *
+ * 
  * @author USER
  */
 public class Connect {
     Connection conn;
-    
+    Double salary;
     public Connection getConnection(){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
