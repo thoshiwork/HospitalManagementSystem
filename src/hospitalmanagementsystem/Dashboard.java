@@ -9,6 +9,7 @@ import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.*;
@@ -23,8 +24,14 @@ import java.util.Date;
 import javax.swing.Timer;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.time.LocalTime;
+import static java.time.LocalTime.parse;
+import java.time.format.DateTimeFormatter;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.RowFilter;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -51,16 +58,22 @@ public class Dashboard extends javax.swing.JFrame {
 //        Maximizing the JFrame in the open
         this.setLocationRelativeTo(null);
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
-
+        // Patient Table
         PatientTableLoad(); // Loading Patient Table
+
+        loadDashboardData();
+
+        //Doctor Table
         DoctorTableLoad(); // Loading Doctor Table
+        loadDoctorNames(); // Loading Doctor Names to the combo box from database.
+
+        //Apointments Panal
         AppIdGen(); // Loading Next Appointment id
         AppointmentTableLoad(); // Loading Appointment Table
         Loading_Canc_Active_Complt_Apmt(); //Loading Cancel ,Cpmplte , active patients in appointment panal 
+        loadSpecializations();
 
-        loadDoctorNames(); // Loading Doctor Names to the combo box from database.
-
-//Loading the Date & Time
+        //Loading the Date & Time
         GetDateTIme();
         this.revalidate();
         this.repaint();
@@ -105,11 +118,11 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        BtnRemainApp = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        jButton7 = new javax.swing.JButton();
+        BtnActvDToday = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        jButton8 = new javax.swing.JButton();
+        BtnTotalPatients = new javax.swing.JButton();
         PatientPnl = new javax.swing.JPanel();
         PatientPnlHeader = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
@@ -129,7 +142,7 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel9 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         AllDocTable = new javax.swing.JTable();
-        jTextField9 = new javax.swing.JTextField();
+        DocSearch = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jLabel28 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
@@ -138,18 +151,17 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel25 = new javax.swing.JLabel();
         jScrollPane8 = new javax.swing.JScrollPane();
         jTable5 = new javax.swing.JTable();
-        jTextField10 = new javax.swing.JTextField();
         jPanel11 = new javax.swing.JPanel();
         jLabel26 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        doc_arrival_table = new javax.swing.JTable();
         jPanel12 = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
         jPanel13 = new javax.swing.JPanel();
         jLabel27 = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        D_Panal_A_Tbl = new javax.swing.JTable();
         ApmntPnl = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -166,36 +178,38 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel23 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        AppointmentTbl = new javax.swing.JTable();
+        AppointmentTbl2 = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
+        viewtablebtn = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         txtHospitalFeeApp = new javax.swing.JTextField();
+        lblToken = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         lblAppId = new javax.swing.JLabel();
         lblAppDate = new javax.swing.JLabel();
-        txtAppDate = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        txtP_IdApp = new javax.swing.JTextField();
+        txtNICApp = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         txtP_nameApp = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        txtSpecializeApp = new javax.swing.JTextField();
-        btnChangeAppSts = new javax.swing.JButton();
         btnAddApp = new javax.swing.JButton();
         txtAppTime = new javax.swing.JTextField();
-        lblAppTime = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
+        txtToken = new javax.swing.JLabel();
+        lblAppTime = new javax.swing.JLabel();
+        cmbDocArvlDate = new javax.swing.JComboBox<>();
+        cmbDoctorSpecialization = new javax.swing.JComboBox<>();
         cmbDoctorName = new javax.swing.JComboBox<>();
         HistoryPanal = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
         jLabel30 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
         jLabel31 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
+        lblSearchHistory = new javax.swing.JTextField();
         jLabel32 = new javax.swing.JLabel();
         jTextField12 = new javax.swing.JTextField();
         jLabel33 = new javax.swing.JLabel();
@@ -209,13 +223,9 @@ public class Dashboard extends javax.swing.JFrame {
         jButton9 = new javax.swing.JButton();
         jScrollPane10 = new javax.swing.JScrollPane();
         jTable7 = new javax.swing.JTable();
-        jLabel37 = new javax.swing.JLabel();
-        jTextField16 = new javax.swing.JTextField();
-        jLabel38 = new javax.swing.JLabel();
-        jTextField17 = new javax.swing.JTextField();
         jPanel16 = new javax.swing.JPanel();
         jScrollPane9 = new javax.swing.JScrollPane();
-        jTable6 = new javax.swing.JTable();
+        TblpatientHistory = new javax.swing.JTable();
         jLabel29 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -277,6 +287,11 @@ public class Dashboard extends javax.swing.JFrame {
         btnTrackH.setText("Track History");
         btnTrackH.setBorder(null);
         btnTrackH.setBorderPainted(false);
+        btnTrackH.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTrackHMouseClicked(evt);
+            }
+        });
         btnTrackH.addActionListener(this::btnTrackHActionPerformed);
         SideBar.add(btnTrackH);
 
@@ -300,22 +315,24 @@ public class Dashboard extends javax.swing.JFrame {
         HeaderLayout.setHorizontalGroup(
             HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(HeaderLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 837, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 142, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbltime, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(32, 32, 32)
                 .addComponent(lbldate, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addContainerGap())
         );
         HeaderLayout.setVerticalGroup(
             HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(HeaderLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
                 .addGroup(HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbltime, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbldate, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(HeaderLayout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbltime, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbldate, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         Main.add(Header, java.awt.BorderLayout.PAGE_START);
@@ -360,13 +377,13 @@ public class Dashboard extends javax.swing.JFrame {
 
         RecentAppoinmntTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "App_Id", "P_Name", "D_Name", "Specialization", "App_Date", "App_Time"
             }
         ));
         jScrollPane1.setViewportView(RecentAppoinmntTbl);
@@ -381,10 +398,24 @@ public class Dashboard extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "P_Name", "NIC", "DateOfBirth", "Contact"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane3.setViewportView(RecentPatientsTbl);
+        if (RecentPatientsTbl.getColumnModel().getColumnCount() > 0) {
+            RecentPatientsTbl.getColumnModel().getColumn(0).setResizable(false);
+            RecentPatientsTbl.getColumnModel().getColumn(1).setResizable(false);
+            RecentPatientsTbl.getColumnModel().getColumn(2).setResizable(false);
+            RecentPatientsTbl.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, 710, 210));
 
@@ -403,30 +434,36 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel6.setText("Remaining Appointments Today");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 20));
 
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(90, 106, 133));
-        jButton3.setText("00");
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 260, 120));
+        BtnRemainApp.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        BtnRemainApp.setForeground(new java.awt.Color(90, 106, 133));
+        BtnRemainApp.setText("00");
+        jPanel1.add(BtnRemainApp, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 260, 120));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(42, 53, 71));
         jLabel7.setText("Active Doctors Today");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 260, 20));
 
-        jButton7.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(90, 106, 133));
-        jButton7.setText("00");
-        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 260, 120));
+        BtnActvDToday.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        BtnActvDToday.setForeground(new java.awt.Color(90, 106, 133));
+        BtnActvDToday.setText("00");
+        jPanel1.add(BtnActvDToday, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 260, 120));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(42, 53, 71));
         jLabel10.setText("Total Patients");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 260, 20));
 
-        jButton8.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(90, 106, 133));
-        jButton8.setText("00");
-        jPanel1.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 260, 120));
+        BtnTotalPatients.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        BtnTotalPatients.setForeground(new java.awt.Color(90, 106, 133));
+        BtnTotalPatients.setText("00");
+        BtnTotalPatients.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnTotalPatientsMouseClicked(evt);
+            }
+        });
+        BtnTotalPatients.addActionListener(this::BtnTotalPatientsActionPerformed);
+        jPanel1.add(BtnTotalPatients, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 260, 120));
 
         Dashbody.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, 500));
 
@@ -563,6 +600,11 @@ public class Dashboard extends javax.swing.JFrame {
         CenterPanal.add(PatientPnl, "card5");
 
         DctrPnl.setBackground(new java.awt.Color(241, 245, 249));
+        DctrPnl.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                DctrPnlComponentShown(evt);
+            }
+        });
         DctrPnl.setLayout(new java.awt.BorderLayout());
 
         jPanel9.setBackground(new java.awt.Color(241, 245, 249));
@@ -599,8 +641,13 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel9.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 34, 804, 260));
 
-        jTextField9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(16, 185, 129)));
-        jPanel9.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 40, 200, 30));
+        DocSearch.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(16, 185, 129)));
+        DocSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                DocSearchKeyPressed(evt);
+            }
+        });
+        jPanel9.add(DocSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 40, 200, 30));
 
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
@@ -632,30 +679,43 @@ public class Dashboard extends javax.swing.JFrame {
 
         jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(42, 53, 71));
-        jLabel25.setText("Availability");
-        jPanel10.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 83, 26));
+        jLabel25.setText("Doctor Delay");
+        jPanel10.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 140, 26));
 
         jTable5.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Specialization", "D_Name", "Date", "Time", "Delay"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane8.setViewportView(jTable5);
+        if (jTable5.getColumnModel().getColumnCount() > 0) {
+            jTable5.getColumnModel().getColumn(0).setResizable(false);
+            jTable5.getColumnModel().getColumn(1).setResizable(false);
+            jTable5.getColumnModel().getColumn(2).setResizable(false);
+            jTable5.getColumnModel().getColumn(3).setResizable(false);
+            jTable5.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         jPanel10.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 338, 250));
-
-        jTextField10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(16, 185, 129)));
-        jPanel10.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, 164, 30));
 
         DctrPnl.add(jPanel10, java.awt.BorderLayout.LINE_START);
 
         jPanel11.setBackground(new java.awt.Color(241, 245, 249));
+        jPanel11.setMinimumSize(new java.awt.Dimension(250, 300));
         jPanel11.setPreferredSize(new java.awt.Dimension(300, 302));
         jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -664,7 +724,8 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel26.setText("Doctor Arrival");
         jPanel11.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 119, 26));
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        doc_arrival_table.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        doc_arrival_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -672,12 +733,26 @@ public class Dashboard extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Specialization", "D_Name", "Arvl_Date", "Arvl_Time"
             }
-        ));
-        jScrollPane6.setViewportView(jTable3);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
-        jPanel11.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 280, 250));
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane6.setViewportView(doc_arrival_table);
+        if (doc_arrival_table.getColumnModel().getColumnCount() > 0) {
+            doc_arrival_table.getColumnModel().getColumn(0).setResizable(false);
+            doc_arrival_table.getColumnModel().getColumn(1).setResizable(false);
+            doc_arrival_table.getColumnModel().getColumn(2).setResizable(false);
+            doc_arrival_table.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        jPanel11.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 300, 250));
 
         DctrPnl.add(jPanel11, java.awt.BorderLayout.LINE_END);
 
@@ -712,6 +787,8 @@ public class Dashboard extends javax.swing.JFrame {
         DctrPnl.add(jPanel12, java.awt.BorderLayout.PAGE_START);
 
         jPanel13.setBackground(new java.awt.Color(241, 245, 249));
+        jPanel13.setMinimumSize(new java.awt.Dimension(200, 300));
+        jPanel13.setPreferredSize(new java.awt.Dimension(240, 300));
         jPanel13.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -719,20 +796,36 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel27.setText("Appointments");
         jPanel13.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 209, 26));
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        D_Panal_A_Tbl.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        D_Panal_A_Tbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "D_Name", "Date", "Total Appontments"
             }
-        ));
-        jScrollPane7.setViewportView(jTable4);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
 
-        jPanel13.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 368, 250));
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane7.setViewportView(D_Panal_A_Tbl);
+        if (D_Panal_A_Tbl.getColumnModel().getColumnCount() > 0) {
+            D_Panal_A_Tbl.getColumnModel().getColumn(0).setResizable(false);
+            D_Panal_A_Tbl.getColumnModel().getColumn(0).setPreferredWidth(80);
+            D_Panal_A_Tbl.getColumnModel().getColumn(1).setResizable(false);
+            D_Panal_A_Tbl.getColumnModel().getColumn(1).setPreferredWidth(50);
+            D_Panal_A_Tbl.getColumnModel().getColumn(2).setResizable(false);
+        }
+
+        jPanel13.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 360, 250));
 
         DctrPnl.add(jPanel13, java.awt.BorderLayout.CENTER);
 
@@ -837,43 +930,46 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(232, 246, 243));
 
-        AppointmentTbl.setModel(new javax.swing.table.DefaultTableModel(
+        AppointmentTbl2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "App_Id", "P_Id", "P_Name", "D_Name", "Date", "Time", "Fee", "Status"
+                "App_Id", "P_Name", "D_Name", "Date", "Time", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane4.setViewportView(AppointmentTbl);
-        if (AppointmentTbl.getColumnModel().getColumnCount() > 0) {
-            AppointmentTbl.getColumnModel().getColumn(0).setPreferredWidth(50);
-            AppointmentTbl.getColumnModel().getColumn(1).setPreferredWidth(50);
-            AppointmentTbl.getColumnModel().getColumn(6).setPreferredWidth(50);
-            AppointmentTbl.getColumnModel().getColumn(7).setPreferredWidth(50);
+        AppointmentTbl2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                AppointmentTbl2MouseReleased(evt);
+            }
+        });
+        jScrollPane4.setViewportView(AppointmentTbl2);
+        if (AppointmentTbl2.getColumnModel().getColumnCount() > 0) {
+            AppointmentTbl2.getColumnModel().getColumn(0).setPreferredWidth(50);
+            AppointmentTbl2.getColumnModel().getColumn(4).setPreferredWidth(50);
+            AppointmentTbl2.getColumnModel().getColumn(5).setPreferredWidth(50);
         }
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -892,6 +988,12 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(42, 53, 71));
         jLabel5.setText("New Appoinment");
 
+        viewtablebtn.setBackground(new java.awt.Color(29, 78, 216));
+        viewtablebtn.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        viewtablebtn.setForeground(new java.awt.Color(255, 255, 255));
+        viewtablebtn.setText("View Table");
+        viewtablebtn.addActionListener(this::viewtablebtnActionPerformed);
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -902,14 +1004,18 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(viewtablebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(viewtablebtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(15, Short.MAX_VALUE))
@@ -922,96 +1028,100 @@ public class Dashboard extends javax.swing.JFrame {
 
         txtHospitalFeeApp.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(16, 185, 129)));
         txtHospitalFeeApp.addActionListener(this::txtHospitalFeeAppActionPerformed);
-        jPanel6.add(txtHospitalFeeApp, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 360, 220, 36));
+        jPanel6.add(txtHospitalFeeApp, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 350, 220, 36));
+
+        lblToken.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblToken.setForeground(new java.awt.Color(90, 106, 133));
+        lblToken.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblToken.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(16, 185, 129)));
+        jPanel6.add(lblToken, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 300, 60, 36));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(90, 106, 133));
         jLabel12.setText("Hospital Fee");
-        jPanel6.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 140, 36));
+        jPanel6.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 140, 36));
 
         lblAppId.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblAppId.setForeground(new java.awt.Color(90, 106, 133));
         lblAppId.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAppId.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(16, 185, 129)));
-        jPanel6.add(lblAppId, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, 220, 36));
+        jPanel6.add(lblAppId, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 220, 36));
 
         lblAppDate.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblAppDate.setForeground(new java.awt.Color(90, 106, 133));
         lblAppDate.setText("App. Date ");
-        jPanel6.add(lblAppDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 140, 36));
-
-        txtAppDate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(16, 185, 129)));
-        txtAppDate.addActionListener(this::txtAppDateActionPerformed);
-        jPanel6.add(txtAppDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 220, 36));
+        jPanel6.add(lblAppDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 140, 36));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(90, 106, 133));
-        jLabel15.setText("Patient ID");
-        jPanel6.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 140, 36));
+        jLabel15.setText("Patient NIC");
+        jPanel6.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 140, 36));
 
-        txtP_IdApp.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(16, 185, 129)));
-        txtP_IdApp.addActionListener(this::txtP_IdAppActionPerformed);
-        txtP_IdApp.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtNICApp.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(16, 185, 129)));
+        txtNICApp.addActionListener(this::txtNICAppActionPerformed);
+        txtNICApp.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtP_IdAppKeyTyped(evt);
+                txtNICAppKeyTyped(evt);
             }
         });
-        jPanel6.add(txtP_IdApp, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 160, 220, 36));
+        jPanel6.add(txtNICApp, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, 220, 36));
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(90, 106, 133));
         jLabel16.setText("Patient Name");
-        jPanel6.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 140, 36));
+        jPanel6.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 140, 36));
 
         txtP_nameApp.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(16, 185, 129)));
         txtP_nameApp.addActionListener(this::txtP_nameAppActionPerformed);
-        jPanel6.add(txtP_nameApp, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 210, 220, 36));
+        jPanel6.add(txtP_nameApp, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, 220, 36));
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(90, 106, 133));
         jLabel17.setText("Doctor Name");
-        jPanel6.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 140, 36));
+        jPanel6.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 140, 36));
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(90, 106, 133));
         jLabel18.setText("Specialization");
-        jPanel6.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 140, 36));
-
-        txtSpecializeApp.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(16, 185, 129)));
-        txtSpecializeApp.addActionListener(this::txtSpecializeAppActionPerformed);
-        jPanel6.add(txtSpecializeApp, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 310, 220, 36));
-
-        btnChangeAppSts.setBackground(new java.awt.Color(29, 78, 216));
-        btnChangeAppSts.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnChangeAppSts.setForeground(new java.awt.Color(255, 255, 255));
-        btnChangeAppSts.setText("Change App. Status");
-        btnChangeAppSts.addActionListener(this::btnChangeAppStsActionPerformed);
-        jPanel6.add(btnChangeAppSts, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 410, 170, 50));
+        jPanel6.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 140, 36));
 
         btnAddApp.setBackground(new java.awt.Color(16, 185, 129));
         btnAddApp.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAddApp.setForeground(new java.awt.Color(255, 255, 255));
         btnAddApp.setText("Add Appointment");
         btnAddApp.addActionListener(this::btnAddAppActionPerformed);
-        jPanel6.add(btnAddApp, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, 170, 50));
+        jPanel6.add(btnAddApp, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, 360, 50));
 
         txtAppTime.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(16, 185, 129)));
         txtAppTime.addActionListener(this::txtAppTimeActionPerformed);
-        jPanel6.add(txtAppTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 220, 36));
-
-        lblAppTime.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblAppTime.setForeground(new java.awt.Color(90, 106, 133));
-        lblAppTime.setText("App.  Time");
-        jPanel6.add(lblAppTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 140, 36));
+        jPanel6.add(txtAppTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 300, 100, 36));
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(90, 106, 133));
         jLabel14.setText("Appointment ID");
-        jPanel6.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 140, 36));
+        jPanel6.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 140, 36));
+
+        txtToken.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtToken.setForeground(new java.awt.Color(90, 106, 133));
+        txtToken.setText("Token");
+        jPanel6.add(txtToken, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 300, 50, 36));
+
+        lblAppTime.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblAppTime.setForeground(new java.awt.Color(90, 106, 133));
+        lblAppTime.setText("App.  Time");
+        jPanel6.add(lblAppTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 140, 36));
+
+        cmbDocArvlDate.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbDocArvlDate.addActionListener(this::cmbDocArvlDateActionPerformed);
+        jPanel6.add(cmbDocArvlDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, 220, 40));
+
+        cmbDoctorSpecialization.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbDoctorSpecialization.addActionListener(this::cmbDoctorSpecializationActionPerformed);
+        jPanel6.add(cmbDoctorSpecialization, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 220, 40));
 
         cmbDoctorName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbDoctorName.addActionListener(this::cmbDoctorNameActionPerformed);
-        jPanel6.add(cmbDoctorName, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, 220, 40));
+        jPanel6.add(cmbDoctorName, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 220, 40));
 
         jPanel8.add(jPanel6, java.awt.BorderLayout.CENTER);
 
@@ -1021,6 +1131,11 @@ public class Dashboard extends javax.swing.JFrame {
 
         HistoryPanal.setBackground(new java.awt.Color(241, 245, 249));
         HistoryPanal.setPreferredSize(new java.awt.Dimension(1030, 571));
+        HistoryPanal.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                HistoryPanalComponentShown(evt);
+            }
+        });
 
         jPanel14.setBackground(new java.awt.Color(241, 245, 249));
 
@@ -1031,6 +1146,12 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel31.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel31.setForeground(new java.awt.Color(42, 53, 71));
         jLabel31.setText("Search");
+
+        lblSearchHistory.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                lblSearchHistoryKeyPressed(evt);
+            }
+        });
 
         jLabel32.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel32.setForeground(new java.awt.Color(42, 53, 71));
@@ -1055,7 +1176,7 @@ public class Dashboard extends javax.swing.JFrame {
                         .addGap(6, 6, 6)
                         .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblSearchHistory, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(207, 207, 207)
                         .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1076,7 +1197,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSearchHistory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1089,7 +1210,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         jLabel34.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel34.setForeground(new java.awt.Color(42, 53, 71));
-        jLabel34.setText("Patient ID");
+        jLabel34.setText("Patient NIC");
 
         jLabel35.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel35.setForeground(new java.awt.Color(42, 53, 71));
@@ -1097,7 +1218,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         jLabel36.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel36.setForeground(new java.awt.Color(42, 53, 71));
-        jLabel36.setText("Patient Name");
+        jLabel36.setText("Patient NIC");
 
         jButton9.setText("Generate Report");
 
@@ -1114,14 +1235,6 @@ public class Dashboard extends javax.swing.JFrame {
         ));
         jScrollPane10.setViewportView(jTable7);
 
-        jLabel37.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel37.setForeground(new java.awt.Color(42, 53, 71));
-        jLabel37.setText("Name");
-
-        jLabel38.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel38.setForeground(new java.awt.Color(42, 53, 71));
-        jLabel38.setText("Contact");
-
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
         jPanel15Layout.setHorizontalGroup(
@@ -1129,24 +1242,16 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel15Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel15Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel15Layout.createSequentialGroup()
                                 .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel15Layout.createSequentialGroup()
-                                .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel15Layout.createSequentialGroup()
-                                .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(144, 144, 144)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel15Layout.createSequentialGroup()
@@ -1170,16 +1275,8 @@ public class Dashboard extends javax.swing.JFrame {
                         .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel34)
                             .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel37)
-                            .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel38)
-                            .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton9))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -1187,18 +1284,34 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel16.setBackground(new java.awt.Color(241, 245, 249));
         jPanel16.setPreferredSize(new java.awt.Dimension(1030, 348));
 
-        jTable6.setModel(new javax.swing.table.DefaultTableModel(
+        TblpatientHistory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "P_Name", "NIC", "D_Name", "Specialization", "App_Date", "App_Time"
             }
-        ));
-        jScrollPane9.setViewportView(jTable6);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane9.setViewportView(TblpatientHistory);
+        if (TblpatientHistory.getColumnModel().getColumnCount() > 0) {
+            TblpatientHistory.getColumnModel().getColumn(0).setResizable(false);
+            TblpatientHistory.getColumnModel().getColumn(1).setResizable(false);
+            TblpatientHistory.getColumnModel().getColumn(2).setResizable(false);
+            TblpatientHistory.getColumnModel().getColumn(3).setResizable(false);
+            TblpatientHistory.getColumnModel().getColumn(4).setResizable(false);
+            TblpatientHistory.getColumnModel().getColumn(5).setResizable(false);
+        }
 
         jLabel29.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(42, 53, 71));
@@ -1284,6 +1397,10 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDashboardActionPerformed
 
     private void btnDoctorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoctorsActionPerformed
+        //Make the place holder to the doctor search...
+        DocSearch.putClientProperty("JTextField.placeholderText", "Search Here");
+
+        Doctor_Availability_Table();
         DashboardPanal.setVisible(false);
         PatientPnl.setVisible(false);
         HistoryPanal.setVisible(false);
@@ -1316,16 +1433,12 @@ public class Dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtHospitalFeeAppActionPerformed
 
-    private void txtAppDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAppDateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtAppDateActionPerformed
-
-    private void txtP_IdAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtP_IdAppActionPerformed
-        int SelectPatientId = Integer.parseInt(txtP_IdApp.getText());
-        if (SelectPatientId > 0) {
+    private void txtNICAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNICAppActionPerformed
+        String NICSelect = txtNICApp.getText();
+        if (NICSelect.length() > 0) {
             try {
-                pst = con.getConnection().prepareStatement("SELECT Name FROM patient WHERE P_Id=?");
-                pst.setInt(1, SelectPatientId);
+                pst = con.getConnection().prepareStatement("SELECT Name FROM patient WHERE NIC=?");
+                pst.setString(1, NICSelect);
                 rs = pst.executeQuery();
 
                 if (rs.next()) {
@@ -1334,38 +1447,36 @@ public class Dashboard extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(this, "Patient Not Found!");
                     txtP_nameApp.setText("");
-                    txtP_IdApp.setText("");
+                    txtNICApp.setText("");
 
                     return;
                 }
 
             } catch (SQLException ex) {
-                System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                System.out.println("This error occur in txtNICAppActionPerformed " + ex);
             }
 
         }
-    }//GEN-LAST:event_txtP_IdAppActionPerformed
+    }//GEN-LAST:event_txtNICAppActionPerformed
 
     private void txtP_nameAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtP_nameAppActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtP_nameAppActionPerformed
 
-    private void txtSpecializeAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSpecializeAppActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSpecializeAppActionPerformed
-
     private void btnAddAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAppActionPerformed
         try {
-            String aid = null, date, time, pid, pname, dname, fee;
-            date = txtAppDate.getText();
+            String aid = null, time, nic, pname, dname, fee, specialization, date;
+
             time = txtAppTime.getText();
-            pid = txtP_IdApp.getText();
+            nic = txtNICApp.getText();
+            specialization = cmbDoctorSpecialization.getSelectedItem().toString();
             pname = txtP_nameApp.getText();
+            date = cmbDocArvlDate.getSelectedItem().toString();
             dname = cmbDoctorName.getSelectedItem().toString();
             fee = txtHospitalFeeApp.getText();
-            pst = con.getConnection().prepareStatement("INSERT into appointment(App_Id,P_Id,P_Name, D_Name,App_Date,App_Time, Hospital_Fee) VALUES(?,?,?,?,?,?, ?)");
+            pst = con.getConnection().prepareStatement("INSERT into appointment(App_Id,NIC,P_Name, D_Name,App_Date,App_Time, Hospital_Fee) VALUES(?,?,?,?,?,?, ?)");
             pst.setString(1, aid);
-            pst.setString(2, pid);
+            pst.setString(2, nic);
             pst.setString(3, pname);
             pst.setString(4, dname);
             pst.setString(5, date);
@@ -1373,13 +1484,20 @@ public class Dashboard extends javax.swing.JFrame {
             pst.setString(7, fee);
 
             JOptionPane.showMessageDialog(this, "Appointment added to the system!!");
-            txtAppDate.setText("");
+
             txtAppTime.setText("");
-            txtP_IdApp.setText("");
+            txtNICApp.setText("");
             txtP_nameApp.setText("");
-            txtAppDate.setText("");
-            cmbDoctorName.setSelectedIndex(0);
-            txtSpecializeApp.setText("");
+            lblToken.setText("");
+            if (cmbDocArvlDate.getItemCount() > 0) {
+                cmbDocArvlDate.setSelectedIndex(0);
+            }
+            if (cmbDoctorName.getItemCount() > 0) {
+                cmbDoctorName.setSelectedIndex(0);
+            }
+            if (cmbDoctorSpecialization.getItemCount() > 0) {
+                cmbDoctorSpecialization.setSelectedIndex(0);
+            }
             txtHospitalFeeApp.setText("");
 
             pst.executeUpdate();
@@ -1407,8 +1525,8 @@ public class Dashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please select a patient from the table to remove");
             return;
         }
-        String PatientID = PatientTbl.getValueAt(RowSelect, 0).toString();
-        String PatientName = PatientTbl.getValueAt(RowSelect, 1).toString();
+        String PatientID = PatientTbl.getValueAt(RowSelect, 0).toString().trim();
+        String PatientName = PatientTbl.getValueAt(RowSelect, 1).toString().trim();
 
         int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure want to delete " + PatientName + "?", "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (dialogResult == JOptionPane.YES_OPTION) {
@@ -1462,28 +1580,50 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_txtAppTimeActionPerformed
 
     private void cmbDoctorNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDoctorNameActionPerformed
-        if (cmbDoctorName.getSelectedIndex() > 0) {
-            String selectedDocName = cmbDoctorName.getSelectedItem().toString();
-            try {
-                pst = con.getConnection().prepareStatement("SELECT Specialization,Doc_Fee FROM doctor WHERE D_Name=?");
-                pst.setString(1, selectedDocName);
-                rs = pst.executeQuery();
-                if (rs.next()) {
-                    txtSpecializeApp.setText(rs.getString("Specialization"));
-                    txtHospitalFeeApp.setText(String.valueOf(rs.getDouble("Doc_Fee")));
-                }
-            } catch (SQLException ex) {
-                System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            }
-        } else {
-            txtSpecializeApp.setText("");
-            txtHospitalFeeApp.setText("");
+        if (cmbDoctorName.getSelectedItem() == null) {
+            return;
         }
+        String selectedDoc = cmbDoctorName.getSelectedItem().toString().trim();
+
+        if (selectedDoc.equalsIgnoreCase("Select Doctor")) {
+            txtHospitalFeeApp.setText("");
+            cmbDocArvlDate.removeAllItems();
+            return;
+        }
+
+        String feeSql = "SELECT Doc_Fee FROM doctor WHERE D_Name=?";
+        try {
+            pst = con.getConnection().prepareStatement(feeSql);
+            pst.setString(1, selectedDoc);
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                txtHospitalFeeApp.setText(rs.getString("Doc_Fee"));
+            }
+
+            String dateSql = "SELECT DISTINCT a.Arrival_Date FROM doctor_availability a INNER JOIN doctor d ON a.Doc_Id = d.D_Id WHERE d.D_Name=?";
+            pst = con.getConnection().prepareStatement(dateSql);
+            pst.setString(1, selectedDoc);
+            rs = pst.executeQuery();
+
+            cmbDocArvlDate.removeAllItems();
+            cmbDocArvlDate.addItem("Select Date");
+
+            while (rs.next()) {
+                cmbDocArvlDate.addItem(rs.getString("Arrival_Date"));
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Error in cmbDoctorArrivalNameActionPerformed " + ex.getMessage());
+            ex.printStackTrace();
+        }
+
+
     }//GEN-LAST:event_cmbDoctorNameActionPerformed
 
-    private void txtP_IdAppKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtP_IdAppKeyTyped
+    private void txtNICAppKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNICAppKeyTyped
 
-    }//GEN-LAST:event_txtP_IdAppKeyTyped
+    }//GEN-LAST:event_txtNICAppKeyTyped
 
     private void btnAppoinmentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAppoinmentMouseClicked
         // TODO add your handling code here:
@@ -1492,15 +1632,175 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void txtsearchappmntKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtsearchappmntKeyPressed
         // TODO add your handling code here:
-        dtm = (DefaultTableModel) AppointmentTbl.getModel();
+        dtm = (DefaultTableModel) AppointmentTbl2.getModel();
         TableRowSorter trs = new TableRowSorter<>(dtm);
-        AppointmentTbl.setRowSorter(trs);
+        AppointmentTbl2.setRowSorter(trs);
         trs.setRowFilter(RowFilter.regexFilter(txtsearchappmnt.getText()));
     }//GEN-LAST:event_txtsearchappmntKeyPressed
 
-    private void btnChangeAppStsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeAppStsActionPerformed
-        String appointId = lblAppId.getText().trim();
-    }//GEN-LAST:event_btnChangeAppStsActionPerformed
+    private void viewtablebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewtablebtnActionPerformed
+        // TODO add your handling code here:
+        AppointmentTable apptable = new AppointmentTable();
+        apptable.setVisible(true);
+    }//GEN-LAST:event_viewtablebtnActionPerformed
+
+    private void cmbDoctorSpecializationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDoctorSpecializationActionPerformed
+
+        if (cmbDoctorSpecialization.getSelectedItem() == null) {
+            return;
+        }
+        String selectedSpec = cmbDoctorSpecialization.getSelectedItem().toString().trim();
+
+        if (selectedSpec.equalsIgnoreCase("Select Specialization")) {
+            cmbDoctorName.removeAllItems();
+            return;
+        }
+        try {
+            String sql = "SELECT D_Name FROM doctor WHERE Specialization=?";
+            pst = con.getConnection().prepareStatement(sql);
+            pst.setString(1, selectedSpec);
+            rs = pst.executeQuery();
+
+            cmbDoctorName.removeAllItems(); // removing old 
+            cmbDoctorName.addItem("SELECT doctor"); // removing old 
+
+            while (rs.next()) {
+                cmbDoctorName.addItem(rs.getString("D_Name"));
+
+            }
+
+        } catch (SQLException ex) {
+            System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }//GEN-LAST:event_cmbDoctorSpecializationActionPerformed
+
+    private void cmbDocArvlDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDocArvlDateActionPerformed
+        if (cmbDocArvlDate.getSelectedItem() == null || cmbDoctorName.getSelectedItem() == null) {
+            return;
+        }
+
+        String selectedDate = cmbDocArvlDate.getSelectedItem().toString().trim();
+        String selectedDoctor = cmbDoctorName.getSelectedItem().toString().trim();
+
+        if (selectedDate.equalsIgnoreCase("Select Date")) {
+            txtAppTime.setText("");
+            return;
+        }
+        try {
+            String sql = "SELECT COUNT(*) AS app_count FROM appointment WHERE D_Name =? AND App_Date=?";
+            pst = con.getConnection().prepareStatement(sql);
+            pst.setString(1, selectedDoctor);
+            pst.setString(2, selectedDate);
+            rs = pst.executeQuery();
+
+            int currentCount = 0;
+
+            if (rs.next()) {
+                currentCount = rs.getInt("app_count");
+            }
+            if (currentCount >= 12) {
+                JOptionPane.showMessageDialog(this, "Appointments Are Booked to this doctor for today!", "Appointment Full", JOptionPane.WARNING_MESSAGE);
+                txtAppTime.setBackground(Color.red);
+                txtAppTime.setText("Full");
+                return;
+            }
+
+            String query = "SELECT a.Arrival_Time FROM doctor_availability a INNER JOIN doctor d ON a.Doc_ID = d.D_Id WHERE d.D_Name= ? AND a.Arrival_Date=?";
+            pst = con.getConnection().prepareStatement(query);
+            pst.setString(1, selectedDoctor);
+            pst.setString(2, selectedDate);
+            rs = pst.executeQuery();
+
+            String arrivalTime = "08:00:00";
+
+            if (rs.next()) {
+                arrivalTime = rs.getString("Arrival_Time");
+
+            }
+
+            int tokenNo = currentCount + 1;
+            LocalTime time = parse(arrivalTime);
+            LocalTime newTime = time.plusMinutes(currentCount * 15);
+
+            DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("hh:mm a");
+            String finalTime = newTime.format(formatTime);
+
+            txtAppTime.setText(finalTime);
+            lblToken.setText(String.valueOf(tokenNo));
+
+        } catch (SQLException ex) {
+            System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+
+    }//GEN-LAST:event_cmbDocArvlDateActionPerformed
+
+    private void AppointmentTbl2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppointmentTbl2MouseReleased
+        if (evt.isPopupTrigger() || SwingUtilities.isRightMouseButton(evt)) {
+            int row = AppointmentTbl2.rowAtPoint(evt.getPoint());
+
+            if (row >= 0 && row < AppointmentTbl2.getRowCount()) {
+                AppointmentTbl2.setRowSelectionInterval(row, row);
+
+                String appID = AppointmentTbl2.getValueAt(row, 0).toString();
+                JPopupMenu popup = new JPopupMenu();
+                JMenuItem itemActive = new JMenuItem("✅Set As Active");
+                itemActive.addActionListener(e -> updateStatusDirectly(appID, "Active"));
+                popup.add(itemActive);
+
+                javax.swing.JMenuItem itemCompleted = new javax.swing.JMenuItem("✔️ Set as Completed");
+                itemCompleted.addActionListener(e -> updateStatusDirectly(appID, "Completed"));
+                popup.add(itemCompleted);
+
+                javax.swing.JMenuItem itemCancelled = new javax.swing.JMenuItem("❌ Set as Cancelled");
+                itemCancelled.addActionListener(e -> updateStatusDirectly(appID, "Cancelled"));
+                popup.add(itemCancelled);
+
+                popup.show(evt.getComponent(), evt.getX(), evt.getY());
+            }
+        }
+    }//GEN-LAST:event_AppointmentTbl2MouseReleased
+
+    private void DctrPnlComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_DctrPnlComponentShown
+        // TODO add your handling code here:
+        Doctor_Availability_Table();
+        Doc_Appointment_Loading();
+    }//GEN-LAST:event_DctrPnlComponentShown
+
+    private void DocSearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DocSearchKeyPressed
+        dtm = (DefaultTableModel) AllDocTable.getModel();
+        TableRowSorter trs = new TableRowSorter<>(dtm);
+        AllDocTable.setRowSorter(trs);
+        trs.setRowFilter(RowFilter.regexFilter(DocSearch.getText()));
+    }//GEN-LAST:event_DocSearchKeyPressed
+
+    private void BtnTotalPatientsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnTotalPatientsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnTotalPatientsActionPerformed
+
+    private void BtnTotalPatientsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnTotalPatientsMouseClicked
+        PatientPnl.setVisible(true);
+        DashboardPanal.setVisible(false);
+        HistoryPanal.setVisible(false);
+        ApmntPnl.setVisible(false);
+        HistoryPanal.setVisible(false);
+
+    }//GEN-LAST:event_BtnTotalPatientsMouseClicked
+
+    private void HistoryPanalComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_HistoryPanalComponentShown
+        // TODO add your handling code here:
+        loadingPatientHistoryTable();
+    }//GEN-LAST:event_HistoryPanalComponentShown
+
+    private void btnTrackHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTrackHMouseClicked
+        loadingPatientHistoryTable();
+    }//GEN-LAST:event_btnTrackHMouseClicked
+
+    private void lblSearchHistoryKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lblSearchHistoryKeyPressed
+        dtm = (DefaultTableModel) TblpatientHistory.getModel();
+        TableRowSorter trs = new TableRowSorter<>(dtm);
+        TblpatientHistory.setRowSorter(trs);
+        trs.setRowFilter(RowFilter.regexFilter(lblSearchHistory.getText()));
+    }//GEN-LAST:event_lblSearchHistoryKeyPressed
 
     public static void main(String args[]) {
         //Flat Laf Loading Code
@@ -1519,12 +1819,17 @@ public class Dashboard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable AllDocTable;
     private javax.swing.JPanel ApmntPnl;
-    private javax.swing.JTable AppointmentTbl;
+    private javax.swing.JTable AppointmentTbl2;
+    private javax.swing.JButton BtnActvDToday;
+    private javax.swing.JButton BtnRemainApp;
+    private javax.swing.JButton BtnTotalPatients;
     private javax.swing.JPanel CenterPanal;
+    private javax.swing.JTable D_Panal_A_Tbl;
     private javax.swing.JPanel DashHead;
     private javax.swing.JPanel DashboardPanal;
     private javax.swing.JPanel Dashbody;
     private javax.swing.JPanel DctrPnl;
+    private javax.swing.JTextField DocSearch;
     private javax.swing.JPanel Header;
     private javax.swing.JPanel HistoryPanal;
     private javax.swing.JPanel Main;
@@ -1542,20 +1847,20 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTable RecentAppoinmntTbl;
     private javax.swing.JTable RecentPatientsTbl;
     private javax.swing.JPanel SideBar;
+    private javax.swing.JTable TblpatientHistory;
     private javax.swing.JButton btnAddApp;
     private javax.swing.JButton btnAppoinment;
-    private javax.swing.JButton btnChangeAppSts;
     private javax.swing.JButton btnDashboard;
     private javax.swing.JButton btnDoctors;
     private javax.swing.JButton btnRegPatient;
     private javax.swing.JButton btnTrackH;
+    private javax.swing.JComboBox<String> cmbDocArvlDate;
     private javax.swing.JComboBox<String> cmbDoctorName;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JComboBox<String> cmbDoctorSpecialization;
+    private javax.swing.JTable doc_arrival_table;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1583,8 +1888,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
-    private javax.swing.JLabel jLabel37;
-    private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1622,38 +1925,32 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
     private javax.swing.JTable jTable5;
-    private javax.swing.JTable jTable6;
     private javax.swing.JTable jTable7;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField14;
     private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField16;
-    private javax.swing.JTextField jTextField17;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JLabel lblActive;
     private javax.swing.JLabel lblAppDate;
     private javax.swing.JLabel lblAppId;
     private javax.swing.JLabel lblAppTime;
     private javax.swing.JLabel lblCancelled;
     private javax.swing.JLabel lblCompleted;
+    private javax.swing.JTextField lblSearchHistory;
+    private javax.swing.JLabel lblToken;
     private javax.swing.JLabel lblappmntdetails;
     private javax.swing.JLabel lbldate;
     private javax.swing.JLabel lbltime;
-    private javax.swing.JTextField txtAppDate;
     private javax.swing.JTextField txtAppTime;
     private javax.swing.JTextField txtHospitalFeeApp;
-    private javax.swing.JTextField txtP_IdApp;
+    private javax.swing.JTextField txtNICApp;
     private javax.swing.JTextField txtP_nameApp;
     private javax.swing.JTextField txtPatientSearch;
-    private javax.swing.JTextField txtSpecializeApp;
+    private javax.swing.JLabel txtToken;
     private javax.swing.JTextField txtsearchappmnt;
     private javax.swing.JLabel userlbl;
+    private javax.swing.JButton viewtablebtn;
     private javax.swing.JLabel welcomemsg;
     // End of variables declaration//GEN-END:variables
 
@@ -1684,20 +1981,18 @@ public class Dashboard extends javax.swing.JFrame {
     public void AppointmentTableLoad() {
         try {
             Statement st = con.getConnection().createStatement();
-            rs = st.executeQuery("SELECT * FROM appointment");
-            dtm = (DefaultTableModel) AppointmentTbl.getModel();
+            rs = st.executeQuery("SELECT App_Id, P_Name, D_Name, App_Date, App_Time, Status FROM appointment");
+            dtm = (DefaultTableModel) AppointmentTbl2.getModel();
             dtm.setRowCount(0);
             while (rs.next()) {
                 String appid = rs.getString("App_Id");
-                String pid = rs.getString("P_Id");
                 String pname = rs.getString("P_Name");
                 String dname = rs.getString("D_Name");
                 String date = rs.getString("App_Date");
                 String time = rs.getString("App_Time");
-                String fee = rs.getString("Hospital_Fee");
                 String status = rs.getString("Status");
 
-                dtm.addRow(new Object[]{appid, pid, pname, dname, date, time, fee, status});
+                dtm.addRow(new Object[]{appid, pname, dname, date, time, status});
 
             }
         } catch (SQLException ex) {
@@ -1782,32 +2077,213 @@ public class Dashboard extends javax.swing.JFrame {
             System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }
-//Loading Cancel ,Cpmplte , active patients in appointment panal 
+//Loading Cancel ,Cmplte , active patients in appointment panal 
 
     private void Loading_Canc_Active_Complt_Apmt() {
         try {
-            String sql = "Select " + "COUNT(CASE WHEN Status = 'Active' THEN 1 END) AS active_count" +
-                    "COUNT(CASE WHEN Status = 'Cancelled' THEN 1 END) AS cancelled_count, " +
-                    "COUNT(CASE WHEN Status = 'Completed' THEN 1 END) AS completed_count " 
-                    + "FROM appointment WHERE App_Date = CUDATE()";
-             
+            String sql = "SELECT " + "COUNT(CASE WHEN Status = 'Active' THEN 1 END) AS active_count, "
+                    + "COUNT(CASE WHEN Status = 'Cancelled' THEN 1 END) AS cancelled_count, "
+                    + "COUNT(CASE WHEN Status = 'Completed' THEN 1 END) AS completed_count "
+                    + "FROM appointment WHERE App_Date = CURDATE();";
+
             pst = con.getConnection().prepareStatement(sql);
             rs = pst.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 int active = rs.getInt("active_count");
                 int completed = rs.getInt("completed_count");
                 int cancelled = rs.getInt("cancelled_count");
-                
+
                 lblActive.setText(String.format("%02d", active));
                 lblCompleted.setText(String.format("%02d", completed));
                 lblCancelled.setText(String.format("%02d", cancelled));
-                
+
             }
-            
-            
+
         } catch (SQLException ex) {
             System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
 
     }
+// Loading Specializations in appointment tab --> cmdDoctorSpecialization combo box;
+
+    private void loadSpecializations() {
+        try {
+            String sql = "SELECT DISTINCT Specialization FROM doctor";
+            pst = con.getConnection().prepareStatement(sql);
+            rs = pst.executeQuery();
+            cmbDoctorSpecialization.removeAllItems();
+            cmbDoctorSpecialization.addItem("Select Specialization");
+
+            while (rs.next()) {
+                cmbDoctorSpecialization.addItem((rs.getString("Specialization")));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Specialization Load Error Check loadSpecialization method " + ex.getMessage());
+        }
+
+    }
+
+    private void updateStatusDirectly(String appID, String newSts) {
+
+        try {
+
+            String sql = "UPDATE appointment SET Status = ? WHERE App_Id = ?";
+            java.sql.PreparedStatement pst = con.getConnection().prepareStatement(sql);
+            pst.setString(1, newSts);
+            pst.setString(2, appID);
+            pst.executeUpdate();
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Status updated to " + newSts + "!");
+
+            AppointmentTableLoad();
+            Loading_Canc_Active_Complt_Apmt(); //Loading Cancel ,Cpmplte , active patients in appointment panal 
+        } catch (Exception ex) {
+            System.out.println("Status Update Error: " + ex.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+        }
+
+    }
+
+    private void Doctor_Availability_Table() {
+        try {
+            String sql = "SELECT d.Specialization,  d.D_Name,a.Arrival_Date, a.Arrival_Time FROM doctor_availability a "
+                    + "INNER JOIN doctor d ON a.Doc_ID = d.D_Id";
+            pst = con.getConnection().prepareStatement(sql);
+            rs = pst.executeQuery();
+            dtm = (DefaultTableModel) doc_arrival_table.getModel();
+            dtm.setRowCount(0);
+            while (rs.next()) {
+                String specialization = rs.getString("Specialization");
+                String dName = rs.getString("D_Name");
+                String date = rs.getString("Arrival_Date");
+                String time = rs.getString("Arrival_Time");
+
+                dtm.addRow(new Object[]{specialization, dName, date, time});
+            }
+        } catch (SQLException ex) {
+            System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.out.println("There is an error in the Doctor Availability Table" + ex);
+        }
+
+    }
+
+    private void Doc_Appointment_Loading() {
+        try {
+            String sql = "SELECT D_Name, App_Date, Count(App_Id) AS Total_Appointments FROM appointment GROUP BY D_Name, App_Date ORDER BY App_Date"
+                    + " DESC, D_Name ASC";
+            pst = con.getConnection().prepareStatement(sql);
+            rs = pst.executeQuery();
+            dtm = (DefaultTableModel) D_Panal_A_Tbl.getModel();
+
+            dtm.setRowCount(0);
+
+            while (rs.next()) {
+                String dname = rs.getString("D_Name");
+                String date = rs.getString("App_Date");
+                String total = rs.getString("Total_Appointments");
+                dtm.addRow(new Object[]{dname, date, total});
+            }
+
+        } catch (SQLException ex) {
+            System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+
+    }
+    // Loading the data to the Dashboard
+
+    private void loadDashboardData() {
+        try {
+            //Loading today appointments in the dashboard
+            String sql1 = "SELECT COUNT(*) FROM appointment WHERE App_Date = CURDATE()";
+            pst = con.getConnection().prepareStatement(sql1);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                BtnRemainApp.setText(String.valueOf(rs.getInt(01)));
+            }
+
+            // Loading today active doctors to the dashboard
+            String sql2 = "SELECT COUNT(DISTINCT Doc_ID) FROM doctor_availability WHERE Arrival_Date=CURDATE()";
+            pst = con.getConnection().prepareStatement(sql2);
+            rs = pst.executeQuery(sql2);
+            if (rs.next()) {
+                BtnActvDToday.setText(String.valueOf(rs.getInt(01)));
+            }
+
+            //Loading the total patient count to the dashboard
+            String sql3 = "SELECT COUNT(DISTINCT P_Id) FROM patient";
+            pst = con.getConnection().prepareStatement(sql3);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                BtnTotalPatients.setText(String.valueOf(rs.getInt(01)));
+            }
+
+            // Loading recent added Patients to the table in the Dashboard
+            dtm = (DefaultTableModel) RecentPatientsTbl.getModel();
+            dtm.setRowCount(0);
+
+            String patientSql = "SELECT Name, NIC, Date_of_Birth, Contact FROM patient ORDER BY P_Id DESC LIMIT 30";
+            pst = con.getConnection().prepareStatement(patientSql);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                dtm.addRow(new Object[]{
+                    rs.getString("Name"),
+                    rs.getString("NIC"),
+                    rs.getString("Date_of_Birth"),
+                    rs.getString("Contact")
+                });
+            }
+
+            //Loading appointments 
+            dtm = (DefaultTableModel) RecentAppoinmntTbl.getModel();
+            dtm.setRowCount(0);
+
+            String appSql = "SELECT a.App_Id, a.P_Name,a.D_Name, d.Specialization, a.App_Date, a.App_Time "
+                    + "FROM appointment a INNER JOIN doctor d ON a.D_Name = d.D_Name"
+                    + " WHERE a.App_Date = CURDATE() ORDER BY a.App_Time ASC";
+            pst = con.getConnection().prepareStatement(appSql);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                dtm.addRow(new Object[]{
+                    rs.getString("App_Id"),
+                    rs.getString("P_Name"),
+                    rs.getString("D_Name"),
+                    rs.getString("Specialization"),
+                    rs.getString("App_Date"),
+                    rs.getString("App_Time")
+                });
+            }
+
+        } catch (SQLException ex) {
+            System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.out.println("Dashboard Error" + ex);
+        }
+    }
+
+    private void loadingPatientHistoryTable() {
+        try {
+            String sql = "SELECT a.P_Name, a.NIC, a.D_Name, d.Specialization, a.App_Date, a.App_Time FROM appointment a"
+                    + " INNER JOIN doctor d ON a.D_Name = d.D_Name INNER JOIN patient p ON a.P_Name = p.Name "
+                    + "WHERE a.Status = 'Completed' ORDER BY a.App_Date DESC, a.App_Time DESC";
+            pst = con.getConnection().prepareStatement(sql);
+            rs = pst.executeQuery();
+            dtm = (DefaultTableModel) TblpatientHistory.getModel();
+            
+            dtm.setRowCount(0);
+            
+            while(rs.next()){
+                dtm.addRow(new Object[] {
+                    rs.getString("P_Name"),
+                    rs.getString("NIC"),
+                    rs.getString("D_Name"),
+                    rs.getString("Specialization"),
+                    rs.getString("App_Date"),
+                    rs.getString("App_Time")                    
+                });
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error in History Table Load" + ex);
+            System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }
+
 }

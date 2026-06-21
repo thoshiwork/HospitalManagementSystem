@@ -19,33 +19,30 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author USER
  */
-
 public class AddPatient extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AddPatient.class.getName());
-    
+
     private Dashboard mdashboard;
     Dashboard tbl_load = new Dashboard();
-    public AddPatient(){
+
+    public AddPatient() {
         initComponents();
     }
+
     public AddPatient(Dashboard dashboard) {
         initComponents();
         this.mdashboard = dashboard;
-        
-        
+
         //Opens the window in the center of the display
         this.setLocationRelativeTo(null);
-        
+
         PatientIdGen();
-        
-  
-        
+
     }
     PreparedStatement pst;
     Connect con = new Connect();
-    
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -196,7 +193,7 @@ public class AddPatient extends javax.swing.JFrame {
 
     private void btnAddPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPatientActionPerformed
         try {
-            String name,nic,contact,email, dob , id=null,address;
+            String name, nic, contact, email, dob, id = null, address;
             name = txtName.getText();
             address = txtAddress.getText();
             nic = txtNIC.getText();
@@ -211,19 +208,16 @@ public class AddPatient extends javax.swing.JFrame {
             pst.setString(5, contact);
             pst.setString(6, email);
             pst.setString(7, address);
-            
-            
+
             JOptionPane.showMessageDialog(this, "Patient Added to the System!");
             clear();
             pst.executeUpdate();
 
-            
-            
-            if(mdashboard != null){
+            if (mdashboard != null) {
                 mdashboard.PatientTableLoad();
             }
             this.dispose();
-            
+
         } catch (SQLException ex) {
             System.getLogger(AddPatient.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
@@ -273,27 +267,26 @@ public class AddPatient extends javax.swing.JFrame {
         txtDOB.setText("");
         txtName.setText("");
         txtEmail.setText("");
-        
+
     }
+
     //generate P_id
-    private void PatientIdGen(){
+    private void PatientIdGen() {
         try {
             pst = con.getConnection().prepareStatement("SELECT MAX(P_id) AS max_id FROM patient");
             ResultSet rs = pst.executeQuery();
-            
-            if(rs.next()){
+
+            if (rs.next()) {
                 int L_id = rs.getInt("max_Id");
                 int N_id = L_id + 1;
                 lblPID.setText(String.valueOf(N_id));
-            }
-            else{
+            } else {
                 lblPID.setText("1");
             }
         } catch (SQLException ex) {
             System.getLogger(AddPatient.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
-        
+
     }
 
-    
 }

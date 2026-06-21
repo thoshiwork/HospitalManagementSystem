@@ -18,7 +18,6 @@ public class Connect {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/nirogahospital_db", "root", "");
-            System.out.println("Successfully Connected!");
             return conn;
         } catch (SQLException | ClassNotFoundException ex) {
             System.getLogger(Connect.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
