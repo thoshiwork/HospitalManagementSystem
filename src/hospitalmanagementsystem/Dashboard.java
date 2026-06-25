@@ -1871,8 +1871,8 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void DelayDocBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DelayDocBtnActionPerformed
         // TODO add your handling code here:
-//        AddDoctor docDelay = new AddDoctor(this);
-//        docDelay.setVisible(true);
+        DoctorDelayForm docDelay = new DoctorDelayForm(this);
+        docDelay.setVisible(true);
 
     }//GEN-LAST:event_DelayDocBtnActionPerformed
 

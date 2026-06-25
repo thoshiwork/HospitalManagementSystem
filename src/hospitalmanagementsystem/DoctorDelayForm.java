@@ -4,6 +4,7 @@
  */
 package hospitalmanagementsystem;
 
+import java.sql.*;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.mysql.cj.protocol.Resultset;
 import com.sun.jdi.connect.spi.Connection;
@@ -28,21 +29,19 @@ public class DoctorDelayForm extends javax.swing.JFrame {
 
     public DoctorDelayForm() {
         initComponents();
+        loadSpecializations();
     }
 
     public DoctorDelayForm(DashboardUser parent) {
         initComponents();
+        loadSpecializations();
     }
 
     public DoctorDelayForm(Dashboard dashboard) {
         initComponents();
         this.mdashboard = dashboard;
-
-        //Opens the window in the center of the display
+        loadSpecializations();
         this.setLocationRelativeTo(null);
-
-        PatientIdGen();
-
     }
     PreparedStatement pst;
     Connect con = new Connect();
@@ -54,26 +53,23 @@ public class DoctorDelayForm extends javax.swing.JFrame {
         LogoVariable = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        lblPID = new javax.swing.JLabel();
+        txtD_ID = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        cmbDate = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        txtName = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        txtDOB = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        txtAddress = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        txtContact = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        txtEmail = new javax.swing.JTextField();
-        btnAddPatient = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        txtNIC = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
+        txtDelayTime = new javax.swing.JTextField();
+        btnAddDelay = new javax.swing.JButton();
+        cmbDoctorName = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        txtTime = new javax.swing.JTextField();
+        cmbSpecialization = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(720, 680));
         setResizable(false);
 
@@ -102,11 +98,15 @@ public class DoctorDelayForm extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(241, 245, 249));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblPID.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblPID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPID.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(15, 118, 110)));
-        jPanel1.add(lblPID, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 190, 40));
+        txtD_ID.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtD_ID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtD_ID.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(15, 118, 110)));
+        jPanel1.add(txtD_ID, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, 190, 40));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 46, 560, 10));
+
+        cmbDate.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbDate.addActionListener(this::cmbDateActionPerformed);
+        jPanel1.add(cmbDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 550, 40));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(42, 53, 71));
@@ -116,116 +116,181 @@ public class DoctorDelayForm extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(42, 53, 71));
         jLabel6.setText("D_ID");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 40, 40));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 80, 40, 40));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(90, 106, 133));
         jLabel8.setText("Specialization");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 540, 40));
 
-        txtName.setBackground(new java.awt.Color(241, 245, 249));
-        txtName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(15, 118, 110)));
-        jPanel1.add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 550, 40));
-
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(90, 106, 133));
-        jLabel9.setText("Contact");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, 230, 40));
-
-        txtDOB.setBackground(new java.awt.Color(241, 245, 249));
-        txtDOB.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(15, 118, 110)));
-        jPanel1.add(txtDOB, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, 230, 40));
-
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(90, 106, 133));
         jLabel10.setText("Name");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 550, 40));
-
-        txtAddress.setBackground(new java.awt.Color(241, 245, 249));
-        txtAddress.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(15, 118, 110)));
-        jPanel1.add(txtAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 550, 40));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 550, 40));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(90, 106, 133));
-        jLabel12.setText("Doc Fee");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 550, 40));
-
-        txtContact.setBackground(new java.awt.Color(241, 245, 249));
-        txtContact.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(15, 118, 110)));
-        jPanel1.add(txtContact, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 550, 40));
+        jLabel12.setText("Date");
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 550, 40));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(90, 106, 133));
-        jLabel7.setText("Email");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, 550, 40));
+        jLabel7.setText("Delay Time");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 390, 100, 40));
 
-        txtEmail.setBackground(new java.awt.Color(241, 245, 249));
-        txtEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(15, 118, 110)));
-        jPanel1.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, 550, 40));
+        txtDelayTime.setBackground(new java.awt.Color(241, 245, 249));
+        txtDelayTime.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(15, 118, 110)));
+        jPanel1.add(txtDelayTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 440, 270, 40));
 
-        btnAddPatient.setBackground(new java.awt.Color(16, 185, 129));
-        btnAddPatient.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnAddPatient.setForeground(new java.awt.Color(255, 255, 255));
-        btnAddPatient.setText("Add Patient");
-        btnAddPatient.addActionListener(this::btnAddPatientActionPerformed);
-        jPanel1.add(btnAddPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 550, 270, 40));
+        btnAddDelay.setBackground(new java.awt.Color(16, 185, 129));
+        btnAddDelay.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnAddDelay.setForeground(new java.awt.Color(255, 255, 255));
+        btnAddDelay.setText("Delay");
+        btnAddDelay.addActionListener(this::btnAddDelayActionPerformed);
+        jPanel1.add(btnAddDelay, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 550, 550, 40));
 
-        jButton1.setBackground(new java.awt.Color(107, 114, 128));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Clear Form");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 550, 270, 40));
+        cmbDoctorName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbDoctorName.addActionListener(this::cmbDoctorNameActionPerformed);
+        jPanel1.add(cmbDoctorName, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 550, 40));
 
-        txtNIC.setBackground(new java.awt.Color(241, 245, 249));
-        txtNIC.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(15, 118, 110)));
-        jPanel1.add(txtNIC, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 230, 40));
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(90, 106, 133));
+        jLabel9.setText("Time");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 100, 40));
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(90, 106, 133));
-        jLabel11.setText("NIC");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 230, 40));
+        txtTime.setBackground(new java.awt.Color(241, 245, 249));
+        txtTime.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(15, 118, 110)));
+        jPanel1.add(txtTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, 270, 40));
+
+        cmbSpecialization.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbSpecialization.addActionListener(this::cmbSpecializationActionPerformed);
+        jPanel1.add(cmbSpecialization, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 550, 40));
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        clear();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void btnAddPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPatientActionPerformed
+    private void btnAddDelayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDelayActionPerformed
         try {
-            String name, nic, contact, email, dob, id = null, address;
-            name = txtName.getText();
-            address = txtAddress.getText();
-            nic = txtNIC.getText();
-            dob = txtDOB.getText();
-            contact = txtContact.getText();
-            email = txtEmail.getText();
-            pst = con.getConnection().prepareStatement("INSERT into patient(P_id,Name,NIC,Date_of_Birth,Contact, Email, Address) VALUES(?,?,?,?,?,?,?)");
-            pst.setString(1, id);
-            pst.setString(2, name);
-            pst.setString(3, nic);
-            pst.setString(4, dob);
-            pst.setString(5, contact);
-            pst.setString(6, email);
-            pst.setString(7, address);
+            String id = txtD_ID.getText().trim();
+            String spec = cmbSpecialization.getSelectedItem().toString();
+            String name = cmbDoctorName.getSelectedItem().toString();
+            String date = cmbDate.getSelectedItem().toString();
+            String time = txtTime.getText().trim();
+            String delayTime = txtDelayTime.getText().trim(); //take as a string
 
-            JOptionPane.showMessageDialog(this, "Patient Added to the System!");
-            clear();
-            pst.executeUpdate();
-
-            if (mdashboard != null) {
-                mdashboard.PatientTableLoad();
+            if (spec.equals("Select Specialization") || name.equals("Select Doctor") || date.equals("Select Date") || delayTime.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Please fill all the fields!");
+                return;
             }
-            this.dispose();
 
-        } catch (SQLException ex) {
-            System.getLogger(DoctorDelayForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            String sql = "INSERT INTO doctor_delay (D_Id, Specialization, D_Name, Date, Time, Delay) VALUES (?, ?, ?, ?, ?, ?)";
+            java.sql.PreparedStatement pst = con.getConnection().prepareStatement(sql);
+
+            pst.setString(1, id);
+            pst.setString(2, spec);
+            pst.setString(3, name);
+            pst.setString(4, date);
+            pst.setString(5, time);
+            pst.setString(6, delayTime);
+
+            int rowCount = pst.executeUpdate();
+
+            if (rowCount > 0) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Doctor Delay Added Successfully!");
+                tbl_load.loadDelayTable();
+                txtDelayTime.setText("");
+                cmbSpecialization.setSelectedIndex(0);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Insert Error: " + e.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage());
         }
-    }//GEN-LAST:event_btnAddPatientActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnAddDelayActionPerformed
+
+    private void cmbDoctorNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDoctorNameActionPerformed
+        try {
+            if (cmbDoctorName.getSelectedItem() == null || cmbDoctorName.getSelectedItem().equals("Select Doctor")) {
+                return;
+            }
+
+            String dName = cmbDoctorName.getSelectedItem().toString();
+            String docId = "";
+
+            String sqlId = "SELECT D_Id FROM doctor WHERE D_Name = ?";
+            pst = con.getConnection().prepareStatement(sqlId);
+            pst.setString(1, dName);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                docId = rs.getString("D_Id");
+                txtD_ID.setText(docId);
+            }
+
+            cmbDate.removeAllItems();
+            cmbDate.addItem("Select Date");
+
+            String sqlDate = "SELECT Arrival_Date FROM doctor_availability WHERE Doc_ID = ?";
+            java.sql.PreparedStatement pstDate = con.getConnection().prepareStatement(sqlDate);
+            pstDate.setString(1, docId);
+            java.sql.ResultSet rsDate = pstDate.executeQuery();
+
+            while (rsDate.next()) {
+                cmbDate.addItem(rsDate.getString("Arrival_Date"));
+            }
+        } catch (Exception e) {
+            System.out.println("Error loading dates: " + e.getMessage());
+        }
+    }//GEN-LAST:event_cmbDoctorNameActionPerformed
+
+    private void cmbDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDateActionPerformed
+        try {
+            if (cmbDate.getSelectedItem() == null || cmbDate.getSelectedItem().equals("Select Date")) {
+                return;
+            }
+
+            String selectedDate = cmbDate.getSelectedItem().toString();
+            String docId = txtD_ID.getText().trim();
+
+            String sql = "SELECT Arrival_Time FROM doctor_availability WHERE Doc_ID = ? AND Arrival_Date = ?";
+            pst = con.getConnection().prepareStatement(sql);
+            pst.setString(1, docId);
+            pst.setString(2, selectedDate);
+
+            java.sql.ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                txtTime.setText(rs.getString("Arrival_Time"));
+            }
+        } catch (Exception e) {
+            System.out.println("Error loading time: " + e.getMessage());
+        }
+    }//GEN-LAST:event_cmbDateActionPerformed
+
+    private void cmbSpecializationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSpecializationActionPerformed
+        try {
+            if (cmbSpecialization.getSelectedItem() == null || cmbSpecialization.getSelectedItem().equals("Select Specialization")) {
+                return;
+            }
+
+            String spec = cmbSpecialization.getSelectedItem().toString();
+            cmbDoctorName.removeAllItems();
+            cmbDoctorName.addItem("Select Doctor");
+
+            String sql = "SELECT D_Name FROM doctor WHERE Specialization = ?";
+            pst = con.getConnection().prepareStatement(sql);
+            pst.setString(1, spec);
+            java.sql.ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                cmbDoctorName.addItem(rs.getString("D_Name"));
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_cmbSpecializationActionPerformed
 
     /**
      * @param args the command line arguments
@@ -238,16 +303,17 @@ public class DoctorDelayForm extends javax.swing.JFrame {
             System.getLogger(DoctorDelayForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
 
-        java.awt.EventQueue.invokeLater(() -> new DoctorDelayForm((Dashboard)null).setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new DoctorDelayForm((Dashboard) null).setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel LogoVariable;
-    private javax.swing.JButton btnAddPatient;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnAddDelay;
+    private javax.swing.JComboBox<String> cmbDate;
+    private javax.swing.JComboBox<String> cmbDoctorName;
+    private javax.swing.JComboBox<String> cmbSpecialization;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
@@ -256,41 +322,30 @@ public class DoctorDelayForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel lblPID;
-    private javax.swing.JTextField txtAddress;
-    private javax.swing.JTextField txtContact;
-    private javax.swing.JTextField txtDOB;
-    private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtNIC;
-    private javax.swing.JTextField txtName;
+    private javax.swing.JLabel txtD_ID;
+    private javax.swing.JTextField txtDelayTime;
+    private javax.swing.JTextField txtTime;
     // End of variables declaration//GEN-END:variables
 
-    private void clear() {
-        txtAddress.setText("");
-        txtContact.setText("");
-        txtDOB.setText("");
-        txtName.setText("");
-        txtEmail.setText("");
-
-    }
-
-    //generate P_id
-    private void PatientIdGen() {
+    private void loadSpecializations() {
         try {
-            pst = con.getConnection().prepareStatement("SELECT MAX(P_id) AS max_id FROM patient");
+            cmbSpecialization.removeAllItems();
+            cmbDoctorName.removeAllItems();
+            cmbDate.removeAllItems();
+            cmbSpecialization.addItem("Select Specialization");
+            cmbDate.addItem("Select Date");
+            cmbDoctorName.addItem("Select Doctor Name");
+
+            String sql = "SELECT DISTINCT Specialization FROM doctor";
+            pst = con.getConnection().prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
 
-            if (rs.next()) {
-                int L_id = rs.getInt("max_Id");
-                int N_id = L_id + 1;
-                lblPID.setText(String.valueOf(N_id));
-            } else {
-                lblPID.setText("1");
+            while (rs.next()) {
+                cmbSpecialization.addItem(rs.getString("Specialization"));
             }
-        } catch (SQLException ex) {
-            System.getLogger(DoctorDelayForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        } catch (Exception e) {
+            System.out.println("Error loading specs: " + e.getMessage());
         }
-
     }
 
 }
