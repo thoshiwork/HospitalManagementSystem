@@ -4,7 +4,11 @@
  */
 package hospitalmanagementsystem;
 
+import java.sql.*;
+
 import com.formdev.flatlaf.FlatLightLaf;
+
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -14,7 +18,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author USER
  */
 public class Login extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Login.class.getName());
 
     /**
@@ -115,31 +119,56 @@ public class Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    Connect con = new Connect();
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String uname = txtUname.getText().trim();
-        String pwd = String.valueOf(pwdfld.getPassword()).trim();
-        
-        if (uname.equals("Admin")  && pwd.equals("Admin")){
-            Dashboard dash = new Dashboard();
-            dash.setVisible(true);
-            this.dispose();
-            return;
+        try {
+            String username = txtUname.getText().trim();
+            String password = new String(pwdfld.getPassword()).trim();
+
+            if (username.isEmpty() || password.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please Enter Username & Password");
+                return;
+            }
+            String sql = "SELECT Role_Id, Username FROM users WHERE Username= ? AND Password=?";
+
+            PreparedStatement pst = con.getConnection().prepareStatement(sql);
+            pst.setString(1, username);
+            pst.setString(2, password);
+
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                int roleId = rs.getInt("Role_Id");
+                String name = rs.getString("Username");
+                if (roleId == 1) {
+                    JOptionPane.showMessageDialog(this, "Welcome " + name);
+                    Dashboard admin = new Dashboard();
+
+                    admin.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Welcome " + name);
+                    DashboardUser user = new DashboardUser();
+                    user.setVisible(true);
+                    this.dispose();
+                }
+
+            }else{
+                JOptionPane.showMessageDialog(this, "Invalid Username or Password.. Please Try Again!");
+            }
+        } catch (SQLException ex) {
+            System.getLogger(Login.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.out.println("Error in Login" + ex);
         }
-        else{
-            JOptionPane.showMessageDialog(this, "Access Denied", uname, JOptionPane.ERROR_MESSAGE);
-            txtUname.setText("");
-            pwdfld.setText("");
-            
-        }
-        
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
+
         //Loading flatlaf
         System.setProperty("flatlaf.useWindowDecorations", "false");
         try {
@@ -148,7 +177,6 @@ public class Login extends javax.swing.JFrame {
             System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
 
-       
         java.awt.EventQueue.invokeLater(() -> new Login().setVisible(true));
     }
 

@@ -5,8 +5,10 @@
 package hospitalmanagementsystem;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import com.mysql.cj.protocol.Resultset;
 import com.sun.jdi.connect.spi.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.UIManager;
 import java.sql.Statement;
@@ -17,46 +19,30 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author USER
  */
-public class EditPatient extends javax.swing.JFrame {
+public class DoctorDelayForm extends javax.swing.JFrame {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditPatient.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DoctorDelayForm.class.getName());
 
     private Dashboard mdashboard;
-    private DashboardUser userdashboard;
-    public EditPatient(Dashboard dashboard, String P_id, String name, String nic, String dob, String contact, String email, String address) {
+    Dashboard tbl_load = new Dashboard();
+
+    public DoctorDelayForm() {
+        initComponents();
+    }
+
+    public DoctorDelayForm(DashboardUser parent) {
+        initComponents();
+    }
+
+    public DoctorDelayForm(Dashboard dashboard) {
         initComponents();
         this.mdashboard = dashboard;
 
-        lblPID.setText(P_id);
-        txtNIC.setText(nic);
-        txtName.setText(name);
-        txtDOB.setText(dob);
-        txtContact.setText(contact);
-        txtEmail.setText(email);
-        txtAddress.setText(address);
         //Opens the window in the center of the display
         this.setLocationRelativeTo(null);
 
-    }
+        PatientIdGen();
 
-    public EditPatient(DashboardUser parent, String P_id, String name, String nic, String dob, String contact, String email, String address) {
-        initComponents();
-        this.userdashboard = userdashboard;
-
-        lblPID.setText(P_id);
-        txtNIC.setText(nic);
-        txtName.setText(name);
-        txtDOB.setText(dob);
-        txtContact.setText(contact);
-        txtEmail.setText(email);
-        txtAddress.setText(address);
-        //Opens the window in the center of the display
-        this.setLocationRelativeTo(null);
-    }
-
-    public EditPatient() {
-        initComponents();
-        this.setLocationRelativeTo(null);
     }
     PreparedStatement pst;
     Connect con = new Connect();
@@ -82,7 +68,7 @@ public class EditPatient extends javax.swing.JFrame {
         txtContact = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
-        btnEditPatient = new javax.swing.JButton();
+        btnAddPatient = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         txtNIC = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
@@ -119,23 +105,23 @@ public class EditPatient extends javax.swing.JFrame {
         lblPID.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblPID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPID.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(15, 118, 110)));
-        jPanel1.add(lblPID, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 60, 190, 40));
+        jPanel1.add(lblPID, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 190, 40));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 46, 560, 10));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(42, 53, 71));
-        jLabel2.setText("Patient Edit Form");
+        jLabel2.setText("Doctor Delay Form");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 560, 34));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(42, 53, 71));
-        jLabel6.setText("P_ID");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 60, 40, 40));
+        jLabel6.setText("D_ID");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 40, 40));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(90, 106, 133));
-        jLabel8.setText("Name");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 550, 40));
+        jLabel8.setText("Specialization");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 540, 40));
 
         txtName.setBackground(new java.awt.Color(241, 245, 249));
         txtName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(15, 118, 110)));
@@ -143,7 +129,7 @@ public class EditPatient extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(90, 106, 133));
-        jLabel9.setText("Date of Birth");
+        jLabel9.setText("Contact");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, 230, 40));
 
         txtDOB.setBackground(new java.awt.Color(241, 245, 249));
@@ -152,7 +138,7 @@ public class EditPatient extends javax.swing.JFrame {
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(90, 106, 133));
-        jLabel10.setText("Address");
+        jLabel10.setText("Name");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 550, 40));
 
         txtAddress.setBackground(new java.awt.Color(241, 245, 249));
@@ -161,7 +147,7 @@ public class EditPatient extends javax.swing.JFrame {
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(90, 106, 133));
-        jLabel12.setText("Contact Number");
+        jLabel12.setText("Doc Fee");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 550, 40));
 
         txtContact.setBackground(new java.awt.Color(241, 245, 249));
@@ -177,12 +163,12 @@ public class EditPatient extends javax.swing.JFrame {
         txtEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(15, 118, 110)));
         jPanel1.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, 550, 40));
 
-        btnEditPatient.setBackground(new java.awt.Color(16, 185, 129));
-        btnEditPatient.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnEditPatient.setForeground(new java.awt.Color(255, 255, 255));
-        btnEditPatient.setText("Edit Patient");
-        btnEditPatient.addActionListener(this::btnEditPatientActionPerformed);
-        jPanel1.add(btnEditPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 550, 270, 40));
+        btnAddPatient.setBackground(new java.awt.Color(16, 185, 129));
+        btnAddPatient.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnAddPatient.setForeground(new java.awt.Color(255, 255, 255));
+        btnAddPatient.setText("Add Patient");
+        btnAddPatient.addActionListener(this::btnAddPatientActionPerformed);
+        jPanel1.add(btnAddPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 550, 270, 40));
 
         jButton1.setBackground(new java.awt.Color(107, 114, 128));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -209,28 +195,37 @@ public class EditPatient extends javax.swing.JFrame {
         clear();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void btnEditPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditPatientActionPerformed
+    private void btnAddPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPatientActionPerformed
         try {
-            String sql = "UPDATE patient SET Name=?, NIC=?, Date_of_Birth=?,Contact=?,Email=?,Address=? WHERE P_id=?";
-            pst = con.getConnection().prepareStatement(sql);
+            String name, nic, contact, email, dob, id = null, address;
+            name = txtName.getText();
+            address = txtAddress.getText();
+            nic = txtNIC.getText();
+            dob = txtDOB.getText();
+            contact = txtContact.getText();
+            email = txtEmail.getText();
+            pst = con.getConnection().prepareStatement("INSERT into patient(P_id,Name,NIC,Date_of_Birth,Contact, Email, Address) VALUES(?,?,?,?,?,?,?)");
+            pst.setString(1, id);
+            pst.setString(2, name);
+            pst.setString(3, nic);
+            pst.setString(4, dob);
+            pst.setString(5, contact);
+            pst.setString(6, email);
+            pst.setString(7, address);
 
-            pst.setString(1, txtName.getText());
-            pst.setString(2, txtNIC.getText());
-            pst.setString(3, txtDOB.getText());
-            pst.setString(4, txtContact.getText());
-            pst.setString(5, txtEmail.getText());
-            pst.setString(6, txtAddress.getText());
-            pst.setString(7, lblPID.getText());
-
+            JOptionPane.showMessageDialog(this, "Patient Added to the System!");
+            clear();
             pst.executeUpdate();
 
-            mdashboard.PatientTableLoad();
+            if (mdashboard != null) {
+                mdashboard.PatientTableLoad();
+            }
+            this.dispose();
+
         } catch (SQLException ex) {
-            System.getLogger(EditPatient.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+            System.getLogger(DoctorDelayForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
-        this.dispose();
-    }//GEN-LAST:event_btnEditPatientActionPerformed
+    }//GEN-LAST:event_btnAddPatientActionPerformed
 
     /**
      * @param args the command line arguments
@@ -240,15 +235,15 @@ public class EditPatient extends javax.swing.JFrame {
         try {
             UIManager.setLookAndFeel(new FlatLightLaf());
         } catch (UnsupportedLookAndFeelException ex) {
-            System.getLogger(EditPatient.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(DoctorDelayForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
 
-        java.awt.EventQueue.invokeLater(() -> new EditPatient().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new DoctorDelayForm((Dashboard)null).setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel LogoVariable;
-    private javax.swing.JButton btnEditPatient;
+    private javax.swing.JButton btnAddPatient;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -276,6 +271,25 @@ public class EditPatient extends javax.swing.JFrame {
         txtDOB.setText("");
         txtName.setText("");
         txtEmail.setText("");
+
+    }
+
+    //generate P_id
+    private void PatientIdGen() {
+        try {
+            pst = con.getConnection().prepareStatement("SELECT MAX(P_id) AS max_id FROM patient");
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                int L_id = rs.getInt("max_Id");
+                int N_id = L_id + 1;
+                lblPID.setText(String.valueOf(N_id));
+            } else {
+                lblPID.setText("1");
+            }
+        } catch (SQLException ex) {
+            System.getLogger(DoctorDelayForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
 
     }
 

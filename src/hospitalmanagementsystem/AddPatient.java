@@ -30,6 +30,10 @@ public class AddPatient extends javax.swing.JFrame {
         initComponents();
     }
 
+    public AddPatient(DashboardUser parent) {
+        initComponents();
+    }
+
     public AddPatient(Dashboard dashboard) {
         initComponents();
         this.mdashboard = dashboard;
@@ -234,7 +238,7 @@ public class AddPatient extends javax.swing.JFrame {
             System.getLogger(AddPatient.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
 
-        java.awt.EventQueue.invokeLater(() -> new AddPatient(null).setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new AddPatient((Dashboard)null).setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

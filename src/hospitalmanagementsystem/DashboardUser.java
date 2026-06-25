@@ -39,9 +39,9 @@ import javax.swing.table.TableRowSorter;
  *
  * @author USER
  */
-public class Dashboard extends javax.swing.JFrame {
+public class DashboardUser extends javax.swing.JFrame {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Dashboard.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DashboardUser.class.getName());
 
     /**
      * Creates new form Dashboard
@@ -52,7 +52,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     ResultSet rs;
 
-    public Dashboard() {
+    public DashboardUser() {
         initComponents();
 
 //        Maximizing the JFrame in the open
@@ -64,7 +64,6 @@ public class Dashboard extends javax.swing.JFrame {
         loadDashboardData();
 
         //Doctor Table
-        
         DoctorTableLoad(); // Loading Doctor Table
         loadDoctorNames(); // Loading Doctor Names to the combo box from database.
 
@@ -145,14 +144,11 @@ public class Dashboard extends javax.swing.JFrame {
         AllDocTable = new javax.swing.JTable();
         DocSearch = new javax.swing.JTextField();
         jLabel28 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
-        btnDocRmv1 = new javax.swing.JButton();
-        btnDocRmv = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         jLabel25 = new javax.swing.JLabel();
         jScrollPane8 = new javax.swing.JScrollPane();
         DocDelayTbl = new javax.swing.JTable();
-        DelayDocBtn = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jPanel11 = new javax.swing.JPanel();
         jLabel26 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
@@ -365,6 +361,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         userlbl.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
         userlbl.setForeground(new java.awt.Color(42, 53, 71));
+        userlbl.setText("User");
         DashHead.add(userlbl);
 
         DashboardPanal.add(DashHead, java.awt.BorderLayout.PAGE_START);
@@ -655,27 +652,6 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel28.setText("All Doctors");
         jPanel9.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 270, 20));
 
-        jButton5.setBackground(new java.awt.Color(16, 185, 129));
-        jButton5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Add Doctor");
-        jButton5.addActionListener(this::jButton5ActionPerformed);
-        jPanel9.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 140, 200, 30));
-
-        btnDocRmv1.setBackground(new java.awt.Color(225, 77, 77));
-        btnDocRmv1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnDocRmv1.setForeground(new java.awt.Color(255, 255, 255));
-        btnDocRmv1.setText("View Income");
-        btnDocRmv1.addActionListener(this::btnDocRmv1ActionPerformed);
-        jPanel9.add(btnDocRmv1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 220, 200, 30));
-
-        btnDocRmv.setBackground(new java.awt.Color(225, 77, 77));
-        btnDocRmv.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnDocRmv.setForeground(new java.awt.Color(255, 255, 255));
-        btnDocRmv.setText("Remove Doctor");
-        btnDocRmv.addActionListener(this::btnDocRmvActionPerformed);
-        jPanel9.add(btnDocRmv, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 180, 200, 30));
-
         DctrPnl.add(jPanel9, java.awt.BorderLayout.PAGE_END);
 
         jPanel10.setBackground(new java.awt.Color(241, 245, 249));
@@ -710,23 +686,19 @@ public class Dashboard extends javax.swing.JFrame {
         jScrollPane8.setViewportView(DocDelayTbl);
         if (DocDelayTbl.getColumnModel().getColumnCount() > 0) {
             DocDelayTbl.getColumnModel().getColumn(0).setResizable(false);
-            DocDelayTbl.getColumnModel().getColumn(0).setPreferredWidth(40);
             DocDelayTbl.getColumnModel().getColumn(1).setResizable(false);
             DocDelayTbl.getColumnModel().getColumn(2).setResizable(false);
-            DocDelayTbl.getColumnModel().getColumn(2).setPreferredWidth(40);
             DocDelayTbl.getColumnModel().getColumn(3).setResizable(false);
-            DocDelayTbl.getColumnModel().getColumn(3).setPreferredWidth(40);
             DocDelayTbl.getColumnModel().getColumn(4).setResizable(false);
-            DocDelayTbl.getColumnModel().getColumn(4).setPreferredWidth(20);
         }
 
         jPanel10.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 338, 250));
 
-        DelayDocBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        DelayDocBtn.setForeground(new java.awt.Color(255, 255, 255));
-        DelayDocBtn.setText("Add Doc Delay");
-        DelayDocBtn.addActionListener(this::DelayDocBtnActionPerformed);
-        jPanel10.add(DelayDocBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, 200, 30));
+        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton4.setForeground(new java.awt.Color(255, 255, 255));
+        jButton4.setText("Doctor Delay");
+        jButton4.addActionListener(this::jButton4ActionPerformed);
+        jPanel10.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, 200, 30));
 
         DctrPnl.add(jPanel10, java.awt.BorderLayout.LINE_START);
 
@@ -788,7 +760,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 992, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1574,7 +1546,7 @@ public class Dashboard extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Patient Removed Successfully!");
                 PatientTableLoad();
             } catch (SQLException ex) {
-                System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                System.getLogger(DashboardUser.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }
         }
     }//GEN-LAST:event_PatientRegRemvPatientBtnActionPerformed
@@ -1707,7 +1679,7 @@ public class Dashboard extends javax.swing.JFrame {
             }
 
         } catch (SQLException ex) {
-            System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(DashboardUser.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }//GEN-LAST:event_cmbDoctorSpecializationActionPerformed
 
@@ -1766,7 +1738,7 @@ public class Dashboard extends javax.swing.JFrame {
             lblToken.setText(String.valueOf(tokenNo));
 
         } catch (SQLException ex) {
-            System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(DashboardUser.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
 
     }//GEN-LAST:event_cmbDocArvlDateActionPerformed
@@ -1802,6 +1774,7 @@ public class Dashboard extends javax.swing.JFrame {
         Doctor_Availability_Table();
         Doc_Appointment_Loading();
         loadDelayTable();
+        
     }//GEN-LAST:event_DctrPnlComponentShown
 
     private void DocSearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DocSearchKeyPressed
@@ -1869,59 +1842,10 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGenerateReportActionPerformed
 
-    private void DelayDocBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DelayDocBtnActionPerformed
-        // TODO add your handling code here:
-//        AddDoctor docDelay = new AddDoctor(this);
-//        docDelay.setVisible(true);
-
-    }//GEN-LAST:event_DelayDocBtnActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        AddDoctor form = new AddDoctor();
-        form.setVisible(true);
-
-        form.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosed(java.awt.event.WindowEvent e) {
-                DoctorTableLoad();
-            }
-        });
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void btnDocRmvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDocRmvActionPerformed
-        int RowSelect = AllDocTable.getSelectedRow();
-
-        if (RowSelect < 0) {
-            JOptionPane.showMessageDialog(this, "Please select a Doctor from the table to remove");
-            return;
-        }
-        String DocID = AllDocTable.getValueAt(RowSelect, 0).toString().trim();
-        String DocName = AllDocTable.getValueAt(RowSelect, 1).toString().trim();
-
-        int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure want to delete " + DocName + "?", "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-        if (dialogResult == JOptionPane.YES_OPTION) {
-            try {
-                pst = con.getConnection().prepareStatement("DELETE FROM doctor WHERE D_Id=?");
-                pst.setString(1, DocID);
-                pst.executeUpdate();
-                JOptionPane.showMessageDialog(this, "Doctor Removed Successfully!");
-                DoctorTableLoad();
-                for (java.awt.Window window : java.awt.Window.getWindows()) {
-                    if (window instanceof DashboardUser && window.isShowing()) {
-                        // මෙතන DoctorTableLoad() කියන්නේ UserDashboard එකේ ටේබල් එක ලෝඩ් කරන method එක (නම වෙනස් නම් ඒක දාපන්)
-                        ((DashboardUser) window).DoctorTableLoad();
-                    }
-                }
-            } catch (SQLException ex) {
-                System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            }
-        }
-
-    }//GEN-LAST:event_btnDocRmvActionPerformed
-
-    private void btnDocRmv1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDocRmv1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDocRmv1ActionPerformed
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+//        AddDoctor form = new AddDoctor(this);
+//        form.setVisible(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     public static void main(String args[]) {
         //Flat Laf Loading Code
@@ -1929,10 +1853,10 @@ public class Dashboard extends javax.swing.JFrame {
         try {
             UIManager.setLookAndFeel(new FlatLightLaf());
         } catch (UnsupportedLookAndFeelException ex) {
-            System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(DashboardUser.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
 
-        java.awt.EventQueue.invokeLater(() -> new Dashboard().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new DashboardUser().setVisible(true));
         // ----------------------------------------------------------------------------
 
     }
@@ -1950,7 +1874,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel DashboardPanal;
     private javax.swing.JPanel Dashbody;
     private javax.swing.JPanel DctrPnl;
-    private javax.swing.JButton DelayDocBtn;
     private javax.swing.JTable DocDelayTbl;
     private javax.swing.JTextField DocSearch;
     private javax.swing.JPanel Header;
@@ -1974,8 +1897,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton btnAddApp;
     private javax.swing.JButton btnAppoinment;
     private javax.swing.JButton btnDashboard;
-    private javax.swing.JButton btnDocRmv;
-    private javax.swing.JButton btnDocRmv1;
     private javax.swing.JButton btnDoctors;
     private javax.swing.JButton btnGenerateReport;
     private javax.swing.JButton btnRegPatient;
@@ -1985,7 +1906,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbDoctorSpecialization;
     private javax.swing.JTable doc_arrival_table;
     private com.toedter.calendar.JDateChooser fromDateChoose;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -2095,7 +2016,7 @@ public class Dashboard extends javax.swing.JFrame {
                 dtm.addRow(new Object[]{pid, name, nic, dob, contact, email, address});
             }
         } catch (SQLException ex) {
-            System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(DashboardUser.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
 
     }
@@ -2118,7 +2039,7 @@ public class Dashboard extends javax.swing.JFrame {
 
             }
         } catch (SQLException ex) {
-            System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(DashboardUser.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
 
     }
@@ -2161,7 +2082,7 @@ public class Dashboard extends javax.swing.JFrame {
                 dtm.addRow(new Object[]{d_id, d_name, d_nic, specialize, contact, room, fee});
             }
         } catch (SQLException ex) {
-            System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(DashboardUser.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }
 //Increasing the Appointment id by 1
@@ -2179,7 +2100,7 @@ public class Dashboard extends javax.swing.JFrame {
                 lblAppId.setText("1");
             }
         } catch (SQLException ex) {
-            System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(DashboardUser.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
 
     }
@@ -2196,7 +2117,7 @@ public class Dashboard extends javax.swing.JFrame {
                 cmbDoctorName.addItem(rs.getString("D_Name"));
             }
         } catch (SQLException ex) {
-            System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(DashboardUser.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }
 //Loading Cancel ,Cmplte , active patients in appointment panal 
@@ -2222,7 +2143,7 @@ public class Dashboard extends javax.swing.JFrame {
             }
 
         } catch (SQLException ex) {
-            System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(DashboardUser.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
 
     }
@@ -2283,7 +2204,7 @@ public class Dashboard extends javax.swing.JFrame {
                 dtm.addRow(new Object[]{specialization, dName, date, time});
             }
         } catch (SQLException ex) {
-            System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(DashboardUser.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             System.out.println("There is an error in the Doctor Availability Table" + ex);
         }
 
@@ -2307,7 +2228,7 @@ public class Dashboard extends javax.swing.JFrame {
             }
 
         } catch (SQLException ex) {
-            System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(DashboardUser.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
 
     }
@@ -2376,7 +2297,7 @@ public class Dashboard extends javax.swing.JFrame {
             }
 
         } catch (SQLException ex) {
-            System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(DashboardUser.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             System.out.println("Dashboard Error" + ex);
         }
     }
@@ -2404,7 +2325,7 @@ public class Dashboard extends javax.swing.JFrame {
             }
         } catch (SQLException ex) {
             System.out.println("Error in History Table Load" + ex);
-            System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(DashboardUser.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }
 
@@ -2468,7 +2389,6 @@ public class Dashboard extends javax.swing.JFrame {
         }
 
     }
-
     public void loadDelayTable() {
         try {
             dtm = (DefaultTableModel) DocDelayTbl.getModel();
@@ -2489,20 +2409,6 @@ public class Dashboard extends javax.swing.JFrame {
             }
         } catch (Exception e) {
             System.out.println("Table Load Error: " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (pst != null) {
-                    pst.close();
-                }
-                if (con.getConnection() != null) {
-                    con.getConnection().close();
-                }
-            } catch (Exception ex) {
-                System.out.println("Close Error: " + ex.getMessage());
-            }
         }
     }
 
