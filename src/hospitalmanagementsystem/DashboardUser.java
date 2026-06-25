@@ -40,7 +40,7 @@ import javax.swing.table.TableRowSorter;
  * @author USER
  */
 public class DashboardUser extends javax.swing.JFrame {
-
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DashboardUser.class.getName());
 
     /**
@@ -49,9 +49,9 @@ public class DashboardUser extends javax.swing.JFrame {
     Connect con = new Connect();
     PreparedStatement pst;
     DefaultTableModel dtm;
-
+    
     ResultSet rs;
-
+    
     public DashboardUser() {
         initComponents();
 
@@ -216,17 +216,13 @@ public class DashboardUser extends javax.swing.JFrame {
         jLabel34 = new javax.swing.JLabel();
         txtPN = new javax.swing.JTextField();
         jLabel35 = new javax.swing.JLabel();
-        jLabel36 = new javax.swing.JLabel();
-        jTextField15 = new javax.swing.JTextField();
         btnGenerateReport = new javax.swing.JButton();
-        jScrollPane10 = new javax.swing.JScrollPane();
-        jTable7 = new javax.swing.JTable();
         jPanel16 = new javax.swing.JPanel();
         jScrollPane9 = new javax.swing.JScrollPane();
         TblpatientHistory = new javax.swing.JTable();
         jLabel29 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setLocationByPlatform(true);
         getContentPane().setLayout(new java.awt.CardLayout());
@@ -694,6 +690,7 @@ public class DashboardUser extends javax.swing.JFrame {
 
         jPanel10.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 338, 250));
 
+        jButton4.setBackground(new java.awt.Color(245, 158, 11));
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Doctor Delay");
@@ -1211,25 +1208,8 @@ public class DashboardUser extends javax.swing.JFrame {
         jLabel35.setForeground(new java.awt.Color(42, 53, 71));
         jLabel35.setText("Generate Report");
 
-        jLabel36.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel36.setForeground(new java.awt.Color(42, 53, 71));
-        jLabel36.setText("Patient NIC");
-
         btnGenerateReport.setText("Generate Report");
         btnGenerateReport.addActionListener(this::btnGenerateReportActionPerformed);
-
-        jTable7.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane10.setViewportView(jTable7);
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -1248,33 +1228,20 @@ public class DashboardUser extends javax.swing.JFrame {
                                 .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtPN, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(144, 144, 144)
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel35)
-                    .addComponent(jLabel36)
-                    .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel35)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel34)
-                            .addComponent(txtPN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(btnGenerateReport, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel34)
+                    .addComponent(txtPN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnGenerateReport, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         jPanel16.setBackground(new java.awt.Color(241, 245, 249));
@@ -1322,7 +1289,7 @@ public class DashboardUser extends javax.swing.JFrame {
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 1008, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1348,7 +1315,7 @@ public class DashboardUser extends javax.swing.JFrame {
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))
         );
@@ -1363,7 +1330,7 @@ public class DashboardUser extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegPatientActionPerformed
-
+        
         PatientPnl.setVisible(true);
         DashboardPanal.setVisible(false);
         HistoryPanal.setVisible(false);
@@ -1378,7 +1345,7 @@ public class DashboardUser extends javax.swing.JFrame {
         PatientPnl.setVisible(false);
         ApmntPnl.setVisible(true);
         DctrPnl.setVisible(false);
-
+        
 
     }//GEN-LAST:event_btnAppoinmentActionPerformed
 
@@ -1388,14 +1355,14 @@ public class DashboardUser extends javax.swing.JFrame {
         HistoryPanal.setVisible(false);
         ApmntPnl.setVisible(false);
         DctrPnl.setVisible(false);
-
+        
 
     }//GEN-LAST:event_btnDashboardActionPerformed
 
     private void btnDoctorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoctorsActionPerformed
         //Make the place holder to the doctor search...
         DocSearch.putClientProperty("JTextField.placeholderText", "Search Here");
-
+        
         Doctor_Availability_Table();
         DashboardPanal.setVisible(false);
         PatientPnl.setVisible(false);
@@ -1436,22 +1403,22 @@ public class DashboardUser extends javax.swing.JFrame {
                 pst = con.getConnection().prepareStatement("SELECT Name FROM patient WHERE NIC=?");
                 pst.setString(1, NICSelect);
                 rs = pst.executeQuery();
-
+                
                 if (rs.next()) {
                     txtP_nameApp.setText(rs.getString("Name"));
-
+                    
                 } else {
                     JOptionPane.showMessageDialog(this, "Patient Not Found!");
                     txtP_nameApp.setText("");
                     txtNICApp.setText("");
-
+                    
                     return;
                 }
-
+                
             } catch (SQLException ex) {
                 System.out.println("This error occur in txtNICAppActionPerformed " + ex);
             }
-
+            
         }
     }//GEN-LAST:event_txtNICAppActionPerformed
 
@@ -1465,18 +1432,18 @@ public class DashboardUser extends javax.swing.JFrame {
                 javax.swing.JOptionPane.showMessageDialog(this, "Enter Doctor Specialization, Doctor Name and Date!");
                 return;
             }
-
+            
             String aid = null;
             String time = txtAppTime.getText().trim();
             String nic = txtNICApp.getText().trim();
             String pname = txtP_nameApp.getText().trim();
             String fee = txtHospitalFeeApp.getText().trim();
             String token = txtToken.getText().trim();
-
+            
             String specialization = cmbDoctorSpecialization.getSelectedItem().toString();
             String dname = cmbDoctorName.getSelectedItem().toString();
             String date = cmbDocArvlDate.getSelectedItem().toString();
-
+            
             pst = con.getConnection().prepareStatement("INSERT into appointment(App_Id,NIC,P_Name, D_Name,App_Date,App_Time, Hospital_Fee) VALUES(?,?,?,?,?,?, ?)");
             pst.setString(1, aid);
             pst.setString(2, nic);
@@ -1485,28 +1452,28 @@ public class DashboardUser extends javax.swing.JFrame {
             pst.setString(5, date);
             pst.setString(6, time);
             pst.setString(7, fee);
-
+            
             pst.executeUpdate();
-
+            
             JOptionPane.showMessageDialog(this, "Appointment added to the system!!");
-
+            
             AppointmentTableLoad();
             AppIdGen();
-
+            
             int printChoice = javax.swing.JOptionPane.showConfirmDialog(this, "Do you want to print the receipt?", "Print Bill", javax.swing.JOptionPane.YES_NO_OPTION);
-
+            
             if (printChoice == javax.swing.JOptionPane.YES_OPTION) {
                 BillPrinter printer = new BillPrinter();
                 printer.printReceipt(nic, pname, specialization, dname, date, time, token, fee);
             }
-
+            
             txtAppTime.setText("");
             txtNICApp.setText("");
             txtP_nameApp.setText("");
             lblToken.setText("");
             txtToken.setText("");
             txtHospitalFeeApp.setText("");
-
+            
             if (cmbDocArvlDate.getItemCount() > 0) {
                 cmbDocArvlDate.setSelectedIndex(0);
             }
@@ -1516,27 +1483,27 @@ public class DashboardUser extends javax.swing.JFrame {
             if (cmbDoctorSpecialization.getItemCount() > 0) {
                 cmbDoctorSpecialization.setSelectedIndex(0);
             }
-
+            
         } catch (SQLException ex) {
             System.getLogger(AddPatient.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }//GEN-LAST:event_btnAddAppActionPerformed
 
     private void PatientTblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PatientTblMouseClicked
-
+        
 
     }//GEN-LAST:event_PatientTblMouseClicked
 
     private void PatientRegRemvPatientBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PatientRegRemvPatientBtnActionPerformed
         int RowSelect = PatientTbl.getSelectedRow();
-
+        
         if (RowSelect < 0) {
             JOptionPane.showMessageDialog(this, "Please select a patient from the table to remove");
             return;
         }
         String PatientID = PatientTbl.getValueAt(RowSelect, 0).toString().trim();
         String PatientName = PatientTbl.getValueAt(RowSelect, 1).toString().trim();
-
+        
         int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure want to delete " + PatientName + "?", "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (dialogResult == JOptionPane.YES_OPTION) {
             try {
@@ -1552,7 +1519,7 @@ public class DashboardUser extends javax.swing.JFrame {
     }//GEN-LAST:event_PatientRegRemvPatientBtnActionPerformed
 
     private void PatientRegEditPatientBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PatientRegEditPatientBtn1ActionPerformed
-
+        
         int RowSelect = PatientTbl.getSelectedRow();
         if (RowSelect < 0) {
             JOptionPane.showMessageDialog(this, "Please select a patient from the table to edit");
@@ -1565,14 +1532,14 @@ public class DashboardUser extends javax.swing.JFrame {
         String contact = PatientTbl.getValueAt(RowSelect, 4).toString();
         String email = PatientTbl.getValueAt(RowSelect, 5).toString();
         String address = PatientTbl.getValueAt(RowSelect, 6).toString();
-
+        
         int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure want to edit " + name + "?", "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         EditPatient editform = new EditPatient(this, id, name, nic, dob, contact, email, address); //use constructor to send values to another jframe
 
         if (dialogResult == JOptionPane.YES_OPTION) {
             editform.setVisible(true);
         }
-
+        
 
     }//GEN-LAST:event_PatientRegEditPatientBtn1ActionPerformed
 
@@ -1593,40 +1560,40 @@ public class DashboardUser extends javax.swing.JFrame {
             return;
         }
         String selectedDoc = cmbDoctorName.getSelectedItem().toString().trim();
-
+        
         if (selectedDoc.equalsIgnoreCase("Select Doctor")) {
             txtHospitalFeeApp.setText("");
             cmbDocArvlDate.removeAllItems();
             return;
         }
-
+        
         String feeSql = "SELECT Doc_Fee FROM doctor WHERE D_Name=?";
         try {
             pst = con.getConnection().prepareStatement(feeSql);
             pst.setString(1, selectedDoc);
             rs = pst.executeQuery();
-
+            
             if (rs.next()) {
                 txtHospitalFeeApp.setText(rs.getString("Doc_Fee"));
             }
-
+            
             String dateSql = "SELECT DISTINCT a.Arrival_Date FROM doctor_availability a INNER JOIN doctor d ON a.Doc_Id = d.D_Id WHERE d.D_Name=?";
             pst = con.getConnection().prepareStatement(dateSql);
             pst.setString(1, selectedDoc);
             rs = pst.executeQuery();
-
+            
             cmbDocArvlDate.removeAllItems();
             cmbDocArvlDate.addItem("Select Date");
-
+            
             while (rs.next()) {
                 cmbDocArvlDate.addItem(rs.getString("Arrival_Date"));
             }
-
+            
         } catch (SQLException ex) {
             System.out.println("Error in cmbDoctorArrivalNameActionPerformed " + ex.getMessage());
             ex.printStackTrace();
         }
-
+        
 
     }//GEN-LAST:event_cmbDoctorNameActionPerformed
 
@@ -1654,12 +1621,12 @@ public class DashboardUser extends javax.swing.JFrame {
     }//GEN-LAST:event_viewtablebtnActionPerformed
 
     private void cmbDoctorSpecializationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDoctorSpecializationActionPerformed
-
+        
         if (cmbDoctorSpecialization.getSelectedItem() == null) {
             return;
         }
         String selectedSpec = cmbDoctorSpecialization.getSelectedItem().toString().trim();
-
+        
         if (selectedSpec.equalsIgnoreCase("Select Specialization")) {
             cmbDoctorName.removeAllItems();
             return;
@@ -1669,15 +1636,15 @@ public class DashboardUser extends javax.swing.JFrame {
             pst = con.getConnection().prepareStatement(sql);
             pst.setString(1, selectedSpec);
             rs = pst.executeQuery();
-
+            
             cmbDoctorName.removeAllItems(); // removing old 
             cmbDoctorName.addItem("SELECT doctor"); // removing old 
 
             while (rs.next()) {
                 cmbDoctorName.addItem(rs.getString("D_Name"));
-
+                
             }
-
+            
         } catch (SQLException ex) {
             System.getLogger(DashboardUser.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
@@ -1687,10 +1654,10 @@ public class DashboardUser extends javax.swing.JFrame {
         if (cmbDocArvlDate.getSelectedItem() == null || cmbDoctorName.getSelectedItem() == null) {
             return;
         }
-
+        
         String selectedDate = cmbDocArvlDate.getSelectedItem().toString().trim();
         String selectedDoctor = cmbDoctorName.getSelectedItem().toString().trim();
-
+        
         if (selectedDate.equalsIgnoreCase("Select Date")) {
             txtAppTime.setText("");
             return;
@@ -1701,9 +1668,9 @@ public class DashboardUser extends javax.swing.JFrame {
             pst.setString(1, selectedDoctor);
             pst.setString(2, selectedDate);
             rs = pst.executeQuery();
-
+            
             int currentCount = 0;
-
+            
             if (rs.next()) {
                 currentCount = rs.getInt("app_count");
             }
@@ -1713,30 +1680,30 @@ public class DashboardUser extends javax.swing.JFrame {
                 txtAppTime.setText("Full");
                 return;
             }
-
+            
             String query = "SELECT a.Arrival_Time FROM doctor_availability a INNER JOIN doctor d ON a.Doc_ID = d.D_Id WHERE d.D_Name= ? AND a.Arrival_Date=?";
             pst = con.getConnection().prepareStatement(query);
             pst.setString(1, selectedDoctor);
             pst.setString(2, selectedDate);
             rs = pst.executeQuery();
-
+            
             String arrivalTime = "08:00:00";
-
+            
             if (rs.next()) {
                 arrivalTime = rs.getString("Arrival_Time");
-
+                
             }
-
+            
             int tokenNo = currentCount + 1;
             LocalTime time = parse(arrivalTime);
             LocalTime newTime = time.plusMinutes(currentCount * 15);
-
+            
             DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("hh:mm a");
             String finalTime = newTime.format(formatTime);
-
+            
             txtAppTime.setText(finalTime);
             lblToken.setText(String.valueOf(tokenNo));
-
+            
         } catch (SQLException ex) {
             System.getLogger(DashboardUser.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
@@ -1746,24 +1713,24 @@ public class DashboardUser extends javax.swing.JFrame {
     private void AppointmentTbl2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppointmentTbl2MouseReleased
         if (evt.isPopupTrigger() || SwingUtilities.isRightMouseButton(evt)) {
             int row = AppointmentTbl2.rowAtPoint(evt.getPoint());
-
+            
             if (row >= 0 && row < AppointmentTbl2.getRowCount()) {
                 AppointmentTbl2.setRowSelectionInterval(row, row);
-
+                
                 String appID = AppointmentTbl2.getValueAt(row, 0).toString();
                 JPopupMenu popup = new JPopupMenu();
                 JMenuItem itemActive = new JMenuItem("✅Set As Active");
                 itemActive.addActionListener(e -> updateStatusDirectly(appID, "Active"));
                 popup.add(itemActive);
-
+                
                 javax.swing.JMenuItem itemCompleted = new javax.swing.JMenuItem("✔️ Set as Completed");
                 itemCompleted.addActionListener(e -> updateStatusDirectly(appID, "Completed"));
                 popup.add(itemCompleted);
-
+                
                 javax.swing.JMenuItem itemCancelled = new javax.swing.JMenuItem("❌ Set as Cancelled");
                 itemCancelled.addActionListener(e -> updateStatusDirectly(appID, "Cancelled"));
                 popup.add(itemCancelled);
-
+                
                 popup.show(evt.getComponent(), evt.getX(), evt.getY());
             }
         }
@@ -1774,7 +1741,7 @@ public class DashboardUser extends javax.swing.JFrame {
         Doctor_Availability_Table();
         Doc_Appointment_Loading();
         loadDelayTable();
-        
+
     }//GEN-LAST:event_DctrPnlComponentShown
 
     private void DocSearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DocSearchKeyPressed
@@ -1827,26 +1794,26 @@ public class DashboardUser extends javax.swing.JFrame {
     }//GEN-LAST:event_toDateChoosePropertyChange
 
     private void btnGenerateReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateReportActionPerformed
-
+        
         String nic = txtPN.getText().trim();
-
+        
         try {
-
+            
             Connection c = con.getConnection();
-
+            
             ReportGenerator reportGen = new ReportGenerator();
             reportGen.createPatientHistoryPDF(nic, this, c);
-
+            
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Database Connection Error: " + e.getMessage());
         }
     }//GEN-LAST:event_btnGenerateReportActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-//        AddDoctor form = new AddDoctor(this);
-//        form.setVisible(true);
+        DoctorDelayForm delayform = new DoctorDelayForm();
+        delayform.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
-
+    
     public static void main(String args[]) {
         //Flat Laf Loading Code
         System.setProperty("flatlaf.useWindowDecorations", "false");
@@ -1855,7 +1822,7 @@ public class DashboardUser extends javax.swing.JFrame {
         } catch (UnsupportedLookAndFeelException ex) {
             System.getLogger(DashboardUser.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
-
+        
         java.awt.EventQueue.invokeLater(() -> new DashboardUser().setVisible(true));
         // ----------------------------------------------------------------------------
 
@@ -1932,7 +1899,6 @@ public class DashboardUser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1956,7 +1922,6 @@ public class DashboardUser extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -1970,8 +1935,6 @@ public class DashboardUser extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JTable jTable7;
-    private javax.swing.JTextField jTextField15;
     private javax.swing.JLabel lblActive;
     private javax.swing.JLabel lblAppDate;
     private javax.swing.JLabel lblAppId;
@@ -2012,15 +1975,15 @@ public class DashboardUser extends javax.swing.JFrame {
                 String contact = rs.getString("Contact");
                 String email = rs.getString("Email");
                 String address = rs.getString("Address");
-
+                
                 dtm.addRow(new Object[]{pid, name, nic, dob, contact, email, address});
             }
         } catch (SQLException ex) {
             System.getLogger(DashboardUser.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
-
+        
     }
-
+    
     public void AppointmentTableLoad() {
         try {
             Statement st = con.getConnection().createStatement();
@@ -2034,14 +1997,14 @@ public class DashboardUser extends javax.swing.JFrame {
                 String date = rs.getString("App_Date");
                 String time = rs.getString("App_Time");
                 String status = rs.getString("Status");
-
+                
                 dtm.addRow(new Object[]{appid, pname, dname, date, time, status});
-
+                
             }
         } catch (SQLException ex) {
             System.getLogger(DashboardUser.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
-
+        
     }
     //Loading Appointment Table
 
@@ -2053,14 +2016,14 @@ public class DashboardUser extends javax.swing.JFrame {
                 Date currentDateTime = new Date();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 String dateStr = dateFormat.format(currentDateTime);
-
+                
                 SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm:ss a");
                 String timeStr = timeFormat.format(currentDateTime);
                 lbltime.setText(timeStr);
                 lbldate.setText(dateStr);
             }
         });
-
+        
         time.start();
     }
 //Doctor table loading method
@@ -2091,7 +2054,7 @@ public class DashboardUser extends javax.swing.JFrame {
         try {
             pst = con.getConnection().prepareStatement("SELECT MAX(App_id) AS max_id FROM appointment");
             ResultSet rs = pst.executeQuery();
-
+            
             if (rs.next()) {
                 int L_id = rs.getInt("max_Id");
                 int N_id = L_id + 1;
@@ -2102,7 +2065,7 @@ public class DashboardUser extends javax.swing.JFrame {
         } catch (SQLException ex) {
             System.getLogger(DashboardUser.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
-
+        
     }
 
     //Loading Doctor Details in the appointment Tab
@@ -2112,7 +2075,7 @@ public class DashboardUser extends javax.swing.JFrame {
             rs = st.executeQuery("SELECT D_Name FROM doctor ORDER BY D_Name ASC");
             cmbDoctorName.removeAllItems();
             cmbDoctorName.addItem("Select Doctor");
-
+            
             while (rs.next()) {
                 cmbDoctorName.addItem(rs.getString("D_Name"));
             }
@@ -2128,24 +2091,24 @@ public class DashboardUser extends javax.swing.JFrame {
                     + "COUNT(CASE WHEN Status = 'Cancelled' THEN 1 END) AS cancelled_count, "
                     + "COUNT(CASE WHEN Status = 'Completed' THEN 1 END) AS completed_count "
                     + "FROM appointment WHERE App_Date = CURDATE();";
-
+            
             pst = con.getConnection().prepareStatement(sql);
             rs = pst.executeQuery();
             if (rs.next()) {
                 int active = rs.getInt("active_count");
                 int completed = rs.getInt("completed_count");
                 int cancelled = rs.getInt("cancelled_count");
-
+                
                 lblActive.setText(String.format("%02d", active));
                 lblCompleted.setText(String.format("%02d", completed));
                 lblCancelled.setText(String.format("%02d", cancelled));
-
+                
             }
-
+            
         } catch (SQLException ex) {
             System.getLogger(DashboardUser.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
-
+        
     }
 // Loading Specializations in appointment tab --> cmdDoctorSpecialization combo box;
 
@@ -2156,37 +2119,37 @@ public class DashboardUser extends javax.swing.JFrame {
             rs = pst.executeQuery();
             cmbDoctorSpecialization.removeAllItems();
             cmbDoctorSpecialization.addItem("Select Specialization");
-
+            
             while (rs.next()) {
                 cmbDoctorSpecialization.addItem((rs.getString("Specialization")));
             }
         } catch (SQLException ex) {
             System.out.println("Specialization Load Error Check loadSpecialization method " + ex.getMessage());
         }
-
+        
     }
-
+    
     private void updateStatusDirectly(String appID, String newSts) {
-
+        
         try {
-
+            
             String sql = "UPDATE appointment SET Status = ? WHERE App_Id = ?";
             java.sql.PreparedStatement pst = con.getConnection().prepareStatement(sql);
             pst.setString(1, newSts);
             pst.setString(2, appID);
             pst.executeUpdate();
-
+            
             javax.swing.JOptionPane.showMessageDialog(this, "Status updated to " + newSts + "!");
-
+            
             AppointmentTableLoad();
             Loading_Canc_Active_Complt_Apmt(); //Loading Cancel ,Cpmplte , active patients in appointment panal 
         } catch (Exception ex) {
             System.out.println("Status Update Error: " + ex.getMessage());
             javax.swing.JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
         }
-
+        
     }
-
+    
     private void Doctor_Availability_Table() {
         try {
             String sql = "SELECT d.Specialization,  d.D_Name,a.Arrival_Date, a.Arrival_Time FROM doctor_availability a "
@@ -2200,16 +2163,16 @@ public class DashboardUser extends javax.swing.JFrame {
                 String dName = rs.getString("D_Name");
                 String date = rs.getString("Arrival_Date");
                 String time = rs.getString("Arrival_Time");
-
+                
                 dtm.addRow(new Object[]{specialization, dName, date, time});
             }
         } catch (SQLException ex) {
             System.getLogger(DashboardUser.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             System.out.println("There is an error in the Doctor Availability Table" + ex);
         }
-
+        
     }
-
+    
     private void Doc_Appointment_Loading() {
         try {
             String sql = "SELECT D_Name, App_Date, Count(App_Id) AS Total_Appointments FROM appointment GROUP BY D_Name, App_Date ORDER BY App_Date"
@@ -2217,20 +2180,20 @@ public class DashboardUser extends javax.swing.JFrame {
             pst = con.getConnection().prepareStatement(sql);
             rs = pst.executeQuery();
             dtm = (DefaultTableModel) D_Panal_A_Tbl.getModel();
-
+            
             dtm.setRowCount(0);
-
+            
             while (rs.next()) {
                 String dname = rs.getString("D_Name");
                 String date = rs.getString("App_Date");
                 String total = rs.getString("Total_Appointments");
                 dtm.addRow(new Object[]{dname, date, total});
             }
-
+            
         } catch (SQLException ex) {
             System.getLogger(DashboardUser.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
-
+        
     }
     // Loading the data to the Dashboard
 
@@ -2263,7 +2226,7 @@ public class DashboardUser extends javax.swing.JFrame {
             // Loading recent added Patients to the table in the Dashboard
             dtm = (DefaultTableModel) RecentPatientsTbl.getModel();
             dtm.setRowCount(0);
-
+            
             String patientSql = "SELECT Name, NIC, Date_of_Birth, Contact FROM patient ORDER BY P_Id DESC LIMIT 30";
             pst = con.getConnection().prepareStatement(patientSql);
             rs = pst.executeQuery();
@@ -2279,7 +2242,7 @@ public class DashboardUser extends javax.swing.JFrame {
             //Loading appointments 
             dtm = (DefaultTableModel) RecentAppoinmntTbl.getModel();
             dtm.setRowCount(0);
-
+            
             String appSql = "SELECT a.App_Id, a.P_Name,a.D_Name, d.Specialization, a.App_Date, a.App_Time "
                     + "FROM appointment a INNER JOIN doctor d ON a.D_Name = d.D_Name"
                     + " WHERE a.App_Date = CURDATE() ORDER BY a.App_Time ASC";
@@ -2295,13 +2258,13 @@ public class DashboardUser extends javax.swing.JFrame {
                     rs.getString("App_Time")
                 });
             }
-
+            
         } catch (SQLException ex) {
             System.getLogger(DashboardUser.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             System.out.println("Dashboard Error" + ex);
         }
     }
-
+    
     private void loadingPatientHistoryTable() {
         try {
             String sql = "SELECT a.P_Name, a.NIC, a.D_Name, d.Specialization, a.App_Date, a.App_Time FROM appointment a"
@@ -2310,9 +2273,9 @@ public class DashboardUser extends javax.swing.JFrame {
             pst = con.getConnection().prepareStatement(sql);
             rs = pst.executeQuery();
             dtm = (DefaultTableModel) TblpatientHistory.getModel();
-
+            
             dtm.setRowCount(0);
-
+            
             while (rs.next()) {
                 dtm.addRow(new Object[]{
                     rs.getString("P_Name"),
@@ -2331,33 +2294,33 @@ public class DashboardUser extends javax.swing.JFrame {
 
     //Method to filter data from History table using dates
     private void autoFilterHistory() {
-
+        
         if (fromDateChoose == null || toDateChoose == null) {
             return;
         }
         Date fromDate = fromDateChoose.getDate();
         Date toDate = toDateChoose.getDate();
-
+        
         if (fromDate == null) {
             loadingPatientHistoryTable();
             return;
         }
-
+        
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String fDate = df.format(fromDate);
-
+        
         String sql = "";
         pst = null;
         try {
             if (toDate == null) {
-
+                
                 sql = "SELECT a.P_Name, a.NIC, a.D_Name, d.Specialization, a.App_Date, a.App_Time FROM appointment a"
                         + " INNER JOIN doctor d ON a.D_Name = d.D_Name"
                         + " INNER JOIN patient p ON a.P_Name = p.Name "
                         + "WHERE a.Status = 'Completed' AND a.App_Date=? ORDER BY a.App_Date DESC, a.App_Time DESC";
                 pst = con.getConnection().prepareStatement(sql);
                 pst.setString(1, fDate);
-
+                
             } else {
                 String tDate = df.format(toDate);
                 sql = "SELECT a.P_Name, a.NIC, a.D_Name, d.Specialization, a.App_Date, a.App_Time FROM appointment a"
@@ -2367,13 +2330,13 @@ public class DashboardUser extends javax.swing.JFrame {
                 pst = con.getConnection().prepareStatement(sql);
                 pst.setString(1, fDate);
                 pst.setString(2, tDate);
-
+                
             }
             rs = pst.executeQuery();
             dtm = (DefaultTableModel) TblpatientHistory.getModel();
-
+            
             dtm.setRowCount(0);
-
+            
             while (rs.next()) {
                 dtm.addRow(new Object[]{
                     rs.getString("P_Name"),
@@ -2387,19 +2350,20 @@ public class DashboardUser extends javax.swing.JFrame {
         } catch (SQLException ex) {
             System.out.println("Error in Dates" + ex);
         }
-
+        
     }
+    
     public void loadDelayTable() {
         try {
             dtm = (DefaultTableModel) DocDelayTbl.getModel();
             dtm.setRowCount(0);
-
+            
             String sql = "SELECT Specialization, D_Name, Date, Time, Delay FROM doctor_delay";
             pst = con.getConnection().prepareStatement(sql);
             rs = pst.executeQuery();
-
+            
             while (rs.next()) {
-
+                
                 String specialization = rs.getString("Specialization");
                 String dname = rs.getString("D_Name");
                 String date = rs.getString("Date");
@@ -2411,5 +2375,5 @@ public class DashboardUser extends javax.swing.JFrame {
             System.out.println("Table Load Error: " + e.getMessage());
         }
     }
-
+    
 }

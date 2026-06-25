@@ -6,8 +6,10 @@ package hospitalmanagementsystem;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import java.sql.ResultSet;
+import java.sql.*;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -19,24 +21,23 @@ import javax.swing.table.TableRowSorter;
  * @author USER
  */
 public class Income extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Income.class.getName());
 
     /**
      * Creates new form AppointmentTable
      */
-    
-    
-
     Connect con = new Connect();
+    PreparedStatement pst;
+    ResultSet rs = null;
+
     public Income() {
         initComponents();
         AppointmentTableLoad();
         this.setLocationRelativeTo(null);
-        
+        loadIncome();
         txtsearchappmnt.putClientProperty("JTextField.placeholderText", "Search Here");
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -53,9 +54,19 @@ public class Income extends javax.swing.JFrame {
         txtsearchappmnt = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        AppointmentTbl2 = new javax.swing.JTable();
+        IncomeTable = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        lblTodayInc = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        lblLastMonthInc = new javax.swing.JLabel();
+        lblTotalIncome = new javax.swing.JLabel();
+        lblMonthTotal = new javax.swing.JLabel();
+        lblWeekTotal = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -100,38 +111,136 @@ public class Income extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(232, 246, 243));
 
-        AppointmentTbl2.setModel(new javax.swing.table.DefaultTableModel(
+        IncomeTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "App_Id", "NIC", "P_Name", "D_Name", "Date", "Time", "Fee", "Status"
+                "App_Id", "Date", "P_Name", "D_Name", "Fee"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane4.setViewportView(AppointmentTbl2);
+        jScrollPane4.setViewportView(IncomeTable);
+
+        jLabel3.setBackground(new java.awt.Color(255, 51, 51));
+        jLabel3.setFont(new java.awt.Font("Segoe UI Black", 0, 30)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(42, 53, 71));
+        jLabel3.setText("Sub Total for this week");
+
+        jLabel2.setBackground(new java.awt.Color(255, 51, 51));
+        jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 30)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(42, 53, 71));
+        jLabel2.setText("Sub Total for this month");
+
+        jLabel1.setBackground(new java.awt.Color(255, 51, 51));
+        jLabel1.setFont(new java.awt.Font("Segoe UI Black", 0, 30)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(42, 53, 71));
+        jLabel1.setText("Sub Total for Today");
+
+        jLabel9.setBackground(new java.awt.Color(255, 51, 51));
+        jLabel9.setFont(new java.awt.Font("Segoe UI Black", 0, 30)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(42, 53, 71));
+        jLabel9.setText("We are gaining.....");
+
+        lblTodayInc.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        lblTodayInc.setForeground(new java.awt.Color(90, 106, 133));
+        lblTodayInc.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTodayInc.setText("00");
+
+        jLabel4.setBackground(new java.awt.Color(255, 51, 51));
+        jLabel4.setFont(new java.awt.Font("Segoe UI Black", 0, 30)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(42, 53, 71));
+        jLabel4.setText("Last Month Income");
+
+        lblLastMonthInc.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        lblLastMonthInc.setForeground(new java.awt.Color(90, 106, 133));
+        lblLastMonthInc.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblLastMonthInc.setText("00");
+
+        lblTotalIncome.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        lblTotalIncome.setForeground(new java.awt.Color(90, 106, 133));
+        lblTotalIncome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTotalIncome.setText("00");
+
+        lblMonthTotal.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        lblMonthTotal.setForeground(new java.awt.Color(90, 106, 133));
+        lblMonthTotal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblMonthTotal.setText("00");
+
+        lblWeekTotal.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        lblWeekTotal.setForeground(new java.awt.Color(90, 106, 133));
+        lblWeekTotal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblWeekTotal.setText("00");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1268, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 659, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblTodayInc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblWeekTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(67, 67, 67)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblTotalIncome, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                            .addComponent(lblMonthTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblLastMonthInc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(14, 14, 14))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTodayInc, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblWeekTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMonthTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblLastMonthInc, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTotalIncome, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(101, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 658, Short.MAX_VALUE)
+                .addComponent(jScrollPane4)
                 .addContainerGap())
         );
 
@@ -157,9 +266,9 @@ public class Income extends javax.swing.JFrame {
 
     private void txtsearchappmntKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtsearchappmntKeyPressed
         // TODO add your handling code here:
-        DefaultTableModel dtm = (DefaultTableModel) AppointmentTbl2.getModel();
+        DefaultTableModel dtm = (DefaultTableModel) IncomeTable.getModel();
         TableRowSorter trs = new TableRowSorter<>(dtm);
-        AppointmentTbl2.setRowSorter(trs);
+        IncomeTable.setRowSorter(trs);
         trs.setRowFilter(RowFilter.regexFilter(txtsearchappmnt.getText()));
     }//GEN-LAST:event_txtsearchappmntKeyPressed
 
@@ -175,25 +284,35 @@ public class Income extends javax.swing.JFrame {
             System.getLogger(Income.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
 
-       java.awt.EventQueue.invokeLater(() -> new Income().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new Income().setVisible(true));
         // ----------------------------------------------------------------------------
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable AppointmentTbl2;
+    private javax.swing.JTable IncomeTable;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JLabel lblLastMonthInc;
+    private javax.swing.JLabel lblMonthTotal;
+    private javax.swing.JLabel lblTodayInc;
+    private javax.swing.JLabel lblTotalIncome;
+    private javax.swing.JLabel lblWeekTotal;
     private javax.swing.JTextField txtsearchappmnt;
     // End of variables declaration//GEN-END:variables
 public void AppointmentTableLoad() {
         try {
             Statement st = con.getConnection().createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM appointment");
-            DefaultTableModel dtm = (DefaultTableModel) AppointmentTbl2.getModel();
+            rs = st.executeQuery("SELECT * FROM appointment");
+            DefaultTableModel dtm = (DefaultTableModel) IncomeTable.getModel();
             dtm.setRowCount(0);
             while (rs.next()) {
                 String appid = rs.getString("App_Id");
@@ -213,5 +332,80 @@ public void AppointmentTableLoad() {
         }
 
     }
-    //Loading Appointment Table
+
+    public void loadIncome() {
+
+        try {
+            Connection myCon = con.getConnection();
+
+            String tableSql = "SELECT App_Id, App_Date, P_Name, D_Name, Hospital_Fee FROM appointment ORDER BY App_Id DESC";
+            pst = myCon.prepareStatement(tableSql);
+            rs = pst.executeQuery();
+
+            DefaultTableModel model = (DefaultTableModel) IncomeTable.getModel();
+            model.setRowCount(0);
+
+            while (rs.next()) {
+                String id = rs.getString("App_Id");
+                String date = rs.getString("App_Date");
+                String pname = rs.getString("P_Name");
+                String dname = rs.getString("D_Name");
+                String fee = rs.getString("Hospital_Fee");
+                model.addRow(new Object[]{id, date, pname, dname, fee});
+            }
+
+            String todaySql = "SELECT IFNULL(SUM(Hospital_Fee), 0) FROM appointment WHERE App_Date = CURDATE() AND Status != 'Cancelled'";
+            pst = myCon.prepareStatement(todaySql);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                lblTodayInc.setText(String.format("Rs. %.2f", rs.getDouble(1)));
+            }
+
+            String weekSql = "SELECT IFNULL(SUM(Hospital_Fee), 0) FROM appointment WHERE YEARWEEK(App_Date, 1) = YEARWEEK(CURDATE(), 1) AND Status != 'Cancelled'";
+            pst = myCon.prepareStatement(weekSql);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                lblWeekTotal.setText(String.format("Rs. %.2f", rs.getDouble(1)));
+            }
+
+            String monthSql = "SELECT IFNULL(SUM(Hospital_Fee), 0) FROM appointment WHERE MONTH(App_Date) = MONTH(CURDATE()) AND YEAR(App_Date) = YEAR(CURDATE()) AND Status != 'Cancelled'";
+            pst = myCon.prepareStatement(monthSql);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                lblMonthTotal.setText(String.format("Rs. %.2f", rs.getDouble(1)));
+            }
+
+            String lastMonthSql = "SELECT IFNULL(SUM(Hospital_Fee), 0) FROM appointment WHERE App_Date >= DATE_SUB(DATE_FORMAT(CURDATE(), '%Y-%m-01'), INTERVAL 1 MONTH) AND App_Date < DATE_FORMAT(CURDATE(), '%Y-%m-01') AND Status != 'Cancelled'";
+            pst = myCon.prepareStatement(lastMonthSql);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                lblLastMonthInc.setText(String.format("Rs. %.2f", rs.getDouble(1)));
+            }
+
+           
+            String totalSql = "SELECT IFNULL(SUM(Hospital_Fee), 0) FROM appointment WHERE Status != 'Cancelled'";
+            pst = myCon.prepareStatement(totalSql);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                lblTotalIncome.setText(String.format("Rs. %.2f", rs.getDouble(1)));
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Income Dashboard Error: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pst != null) {
+                    pst.close();
+                }
+                if (con.getConnection() != null) {
+                    con.getConnection().close();
+                }
+            } catch (Exception ex) {
+                System.out.println("Close Error: " + ex.getMessage());
+            }
+        }
+    }
 }

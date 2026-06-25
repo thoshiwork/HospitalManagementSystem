@@ -220,11 +220,9 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel34 = new javax.swing.JLabel();
         txtPN = new javax.swing.JTextField();
         jLabel35 = new javax.swing.JLabel();
-        jLabel36 = new javax.swing.JLabel();
-        jTextField15 = new javax.swing.JTextField();
         btnGenerateReport = new javax.swing.JButton();
-        jScrollPane10 = new javax.swing.JScrollPane();
-        jTable7 = new javax.swing.JTable();
+        jPanel18 = new javax.swing.JPanel();
+        lblImageArea = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
         jScrollPane9 = new javax.swing.JScrollPane();
         TblpatientHistory = new javax.swing.JTable();
@@ -1230,80 +1228,27 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel15.setBackground(new java.awt.Color(241, 245, 249));
         jPanel15.setPreferredSize(new java.awt.Dimension(1030, 175));
+        jPanel15.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel34.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel34.setForeground(new java.awt.Color(42, 53, 71));
         jLabel34.setText("Patient NIC");
+        jPanel15.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 32, 79, -1));
+        jPanel15.add(txtPN, new org.netbeans.lib.awtextra.AbsoluteConstraints(111, 32, 217, -1));
 
         jLabel35.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel35.setForeground(new java.awt.Color(42, 53, 71));
         jLabel35.setText("Generate Report");
-
-        jLabel36.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel36.setForeground(new java.awt.Color(42, 53, 71));
-        jLabel36.setText("Patient NIC");
+        jPanel15.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 126, -1));
 
         btnGenerateReport.setText("Generate Report");
         btnGenerateReport.addActionListener(this::btnGenerateReportActionPerformed);
+        jPanel15.add(btnGenerateReport, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 72, 308, 43));
 
-        jTable7.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane10.setViewportView(jTable7);
+        jPanel18.setLayout(new java.awt.BorderLayout());
+        jPanel18.add(lblImageArea, java.awt.BorderLayout.CENTER);
 
-        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
-        jPanel15.setLayout(jPanel15Layout);
-        jPanel15Layout.setHorizontalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel15Layout.createSequentialGroup()
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnGenerateReport, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel15Layout.createSequentialGroup()
-                                .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtPN, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(144, 144, 144)
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
-        );
-        jPanel15Layout.setVerticalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel15Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel35)
-                    .addComponent(jLabel36)
-                    .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel34)
-                            .addComponent(txtPN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(btnGenerateReport, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jPanel15.add(jPanel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, 680, 130));
 
         jPanel16.setBackground(new java.awt.Color(241, 245, 249));
         jPanel16.setPreferredSize(new java.awt.Dimension(1030, 348));
@@ -1350,7 +1295,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 1008, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1367,8 +1312,8 @@ public class Dashboard extends javax.swing.JFrame {
             HistoryPanalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(HistoryPanalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                .addComponent(jPanel16, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1036, Short.MAX_VALUE)
-                .addComponent(jPanel15, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1036, Short.MAX_VALUE))
+                .addComponent(jPanel16, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1040, Short.MAX_VALUE)
+                .addComponent(jPanel15, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1040, Short.MAX_VALUE))
         );
         HistoryPanalLayout.setVerticalGroup(
             HistoryPanalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1376,9 +1321,9 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         CenterPanal.add(HistoryPanal, "card4");
@@ -1827,6 +1772,24 @@ public class Dashboard extends javax.swing.JFrame {
     private void HistoryPanalComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_HistoryPanalComponentShown
         // TODO add your handling code here:
         loadingPatientHistoryTable();
+        
+        //loading img 
+        if (lblImageArea.getIcon() == null) {
+        
+        try {
+            javax.swing.ImageIcon originalIcon = new javax.swing.ImageIcon("C:\\Users\\USER\\Documents\\NetBeansProjects\\HospitalMS\\HospitalManagementSystem\\Images\\historypnlimg.png"); 
+            
+            int width = 700;  
+            int height = 150; 
+            
+            java.awt.Image scaledImage = originalIcon.getImage().getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+            
+            lblImageArea.setIcon(new javax.swing.ImageIcon(scaledImage));
+            
+        } catch (Exception e) {
+            System.out.println("Image Load Error: " + e.getMessage());
+        }
+    }
     }//GEN-LAST:event_HistoryPanalComponentShown
 
     private void btnTrackHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTrackHMouseClicked
@@ -1920,7 +1883,8 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDocRmvActionPerformed
 
     private void btnDocRmv1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDocRmv1ActionPerformed
-        // TODO add your handling code here:
+        Income income = new Income();
+        income.setVisible(true);
     }//GEN-LAST:event_btnDocRmv1ActionPerformed
 
     public static void main(String args[]) {
@@ -2011,7 +1975,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -2026,6 +1989,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -2035,7 +1999,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -2049,14 +2012,13 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JTable jTable7;
-    private javax.swing.JTextField jTextField15;
     private javax.swing.JLabel lblActive;
     private javax.swing.JLabel lblAppDate;
     private javax.swing.JLabel lblAppId;
     private javax.swing.JLabel lblAppTime;
     private javax.swing.JLabel lblCancelled;
     private javax.swing.JLabel lblCompleted;
+    private javax.swing.JLabel lblImageArea;
     private javax.swing.JTextField lblSearchHistory;
     private javax.swing.JLabel lblToken;
     private javax.swing.JLabel lblappmntdetails;
