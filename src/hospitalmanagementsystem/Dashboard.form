@@ -1154,7 +1154,7 @@
                     <Component class="javax.swing.JButton" name="btnDocRmv1">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="4d" green="4d" red="e1" type="rgb"/>
+                          <Color blue="b" green="9e" red="f5" type="rgb"/>
                         </Property>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Segoe UI" size="14" style="1"/>
@@ -1296,6 +1296,9 @@
                     </Container>
                     <Component class="javax.swing.JButton" name="DelayDocBtn">
                       <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="b" green="9e" red="f5" type="rgb"/>
+                        </Property>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Segoe UI" size="14" style="1"/>
                         </Property>

@@ -66,7 +66,7 @@ public class Income extends javax.swing.JFrame {
         lblMonthTotal = new javax.swing.JLabel();
         lblWeekTotal = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 

@@ -660,7 +660,7 @@ public class Dashboard extends javax.swing.JFrame {
         jButton5.addActionListener(this::jButton5ActionPerformed);
         jPanel9.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 140, 200, 30));
 
-        btnDocRmv1.setBackground(new java.awt.Color(225, 77, 77));
+        btnDocRmv1.setBackground(new java.awt.Color(245, 158, 11));
         btnDocRmv1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDocRmv1.setForeground(new java.awt.Color(255, 255, 255));
         btnDocRmv1.setText("View Income");
@@ -720,6 +720,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel10.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 338, 250));
 
+        DelayDocBtn.setBackground(new java.awt.Color(245, 158, 11));
         DelayDocBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         DelayDocBtn.setForeground(new java.awt.Color(255, 255, 255));
         DelayDocBtn.setText("Add Doc Delay");
